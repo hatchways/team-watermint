@@ -9,10 +9,17 @@ export default function Settings(): JSX.Element {
       <Grid container>
         <Grid item xs={6} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
           <Box width="70%" ml={5}>
-            <Typography variant="h2" sx={{ fontWeight: 700, paddingBottom: '4rem', fontSize: 75 }}>
+            <Typography
+              variant="h2"
+              sx={{
+                fontWeight: 700,
+                paddingBottom: '2rem',
+                fontSize: 68,
+              }}
+            >
               Find the care your dog deserves
             </Typography>
-            <Box width="60%" mb={2.8}>
+            <Box width="60%" mb={2}>
               <FormInput
                 id="email"
                 label="Where"
@@ -24,7 +31,7 @@ export default function Settings(): JSX.Element {
                 autoFocus
               />
             </Box>
-            <Box display="flex" flexDirection="row" width="60%" mb={3.6}>
+            <Box display="flex" flexDirection="row" width="60%" mb={2}>
               <FormInput
                 id="date"
                 label="drop in / drop off"
