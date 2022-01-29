@@ -1,7 +1,6 @@
 import React from 'react';
-import { ExtractRouteParams, RouteChildrenProps, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
-import { JsxElement } from 'typescript';
 import { useAuth } from '../../context/useAuthContext';
 
 interface ProtectedRoute extends RouteProps {
