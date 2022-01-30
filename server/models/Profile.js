@@ -4,7 +4,12 @@ const profileSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'User',
+  },
+  accountType: {
+    type: String,
+    default: "",
+    enum: ['pet_owner', 'pet_sitter'],
   },
   name: {
     type: String,
