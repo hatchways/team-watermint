@@ -3,14 +3,16 @@ import { styled } from '@mui/material/styles';
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2.5),
   },
   '& .MuiInputBase-input': {
     borderRadius: 8,
     border: '1px solid #dbdbdb',
-    fontSize: 16,
+    fontSize: 15.5,
+    fontStretch: 'expanded',
     width: '100%',
     padding: '15px',
+    fontWeight: 400,
   },
 }));
 
@@ -39,10 +41,11 @@ const FormInput: React.FC<FormInputProps> = ({
     <FormControl sx={{ width: '100%', marginBottom: 2 }} variant="standard">
       <InputLabel
         sx={{
-          fontSize: 16,
-          fontWeight: 700,
+          fontSize: 17.5,
+          fontWeight: 900,
           textTransform: 'uppercase',
           color: '#000',
+          letterSpacing: '1.3px',
         }}
         shrink
         htmlFor={id}

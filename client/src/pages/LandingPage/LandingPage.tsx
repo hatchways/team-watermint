@@ -19,7 +19,7 @@ export default function Settings(): JSX.Element {
             >
               Find the care your dog deserves
             </Typography>
-            <Box width="60%" mb={2}>
+            <Box width="70%" mb={2}>
               <FormInput
                 id="email"
                 label="Where"
@@ -31,17 +31,25 @@ export default function Settings(): JSX.Element {
                 autoFocus
               />
             </Box>
-            <Box display="flex" flexDirection="row" width="60%" mb={2}>
+            <Box display="flex" flexDirection="row" width="70%" mb={2}>
               <FormInput
                 id="date"
-                label="drop in / drop off"
+                label="drop in"
                 fullWidth
                 margin="normal"
                 name="date"
                 placeholder="mm/dd/yyyy"
                 autoFocus
               />
-              <FormInput id="date" label="" fullWidth margin="normal" name="date" placeholder="mm/dd/yyyy" autoFocus />
+              <FormInput
+                id="date"
+                label="drop off"
+                fullWidth
+                margin="normal"
+                name="date"
+                placeholder="mm/dd/yyyy"
+                autoFocus
+              />
             </Box>
             <Box textAlign="left">
               <Button
