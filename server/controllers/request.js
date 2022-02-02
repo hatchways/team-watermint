@@ -26,7 +26,20 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   const { sitterId, start, end } = req.body;
   const userId = req.user.id;
 
-  if (start >= end) {
+  const startDate = new Date(parseInt(start));
+  const endDate = new Date(parseInt(end));
+
+  if (!(startDate instanceof Date) || isNaN(startDate)) {
+    res.status(400);
+    throw new Error("Invalid start date");
+  }
+
+  if (!(endDate instanceof Date) || isNaN(endDate)) {
+    res.status(400);
+    throw new Error("Invalid end date");
+  }
+
+  if (startDate.getTime() >= endDate.getTime()) {
     res.status(400);
     throw new Error("End date must be later than start date");
   }
@@ -41,8 +54,8 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   const request = await Request.create({
     userId,
     sitterId,
-    start,
-    end,
+    start: startDate,
+    end: endDate,
   });
 
   if (request) {
