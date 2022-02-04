@@ -6,23 +6,18 @@ import { useSnackBar } from '../../context/useSnackbarContext';
 import AuthPageWrapper from '../../components/AuthPageWrapper/AuthPageWrapper';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import AuthPageFooter from '../../components/AuthPageFooter/AuthPageFooter';
-//import { useLocation } from 'react-router-dom';
 
 export default function Register(): JSX.Element {
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
 
-  // const location = useLocation();
-  // console.log(location);
-  // const query = new URLSearchParams(location.search);
-  // const accountType = query.get('accountType');
-  // console.log(accountType);
-
   const handleSubmit = (
-    { name, email, password }: { email: string; password: string; name: string },
-    { setSubmitting }: FormikHelpers<{ email: string; password: string; name: string }>,
+    { name, email, password, accountType }: { email: string; password: string; name: string; accountType: string },
+    { setSubmitting }: FormikHelpers<{ email: string; password: string; name: string; accountType: string }>,
   ) => {
-    register(name, email, password).then((data) => {
+    register(name, email, password, accountType).then((data) => {
+      console.log(accountType);
+      console.log(data);
       if (data.error) {
         console.error({ error: data.error.message });
         setSubmitting(false);
