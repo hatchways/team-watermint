@@ -1,49 +1,11 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Input, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/system';
 import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 import { User } from '../../../interface/User';
-
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles({
-  photo: {
-    width: '180px',
-    height: '180px',
-    objectFit: 'cover',
-    borderRadius: '50%',
-  },
-  textDescription: {
-    width: '40%',
-    color: '#555',
-    textAlign: 'center',
-    '&.MuiTypography-body1': {
-      margin: '30px auto',
-      fontSize: 16,
-    },
-  },
-  specialButtons: {
-    '&.MuiButton-outlinedPrimary': {
-      textTransform: 'none',
-      border: '1.5px solid',
-      fontSize: 16,
-      padding: '20px 50px',
-    },
-    '&.MuiButton-textSecondary': {
-      textTransform: 'none',
-      fontSize: 16,
-      fontWeight: 400,
-      padding: '20px 50px',
-      marginTop: 20,
-    },
-  },
-  buttonContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 350,
-    margin: '0 auto',
-  },
-});
+import useStyles from './useStyles';
+import { useSnackBar } from '../../../context/useSnackbarContext';
+import { useState } from 'react';
 
 interface ProfilePhotoProps {
   header: string;
@@ -53,6 +15,17 @@ interface ProfilePhotoProps {
 
 const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, currentProfile }) => {
   const classes = useStyles();
+  const [isAttached, setIsAttached] = useState(false);
+  const { updateSnackBarMessage } = useSnackBar();
+
+  const attachFile = (event: any) => {
+    setIsAttached(true);
+    updateSnackBarMessage('File attached and ready for upload');
+  };
+
+  const uploadFile = (event: any) => {
+    // TODO: Update state and message during integration
+  };
 
   return (
     <Box
@@ -73,19 +46,49 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
         Be sure to use a photo that clearly shows your face
       </Typography>
       <Box marginTop={5} className={classes.buttonContainer}>
+        {isAttached ? (
+          <Button
+            type="submit"
+            size="large"
+            variant="contained"
+            color="primary"
+            className={classes.specialButtons}
+            onClick={uploadFile}
+            disableElevation
+          >
+            Upload
+          </Button>
+        ) : (
+          <label htmlFor="imageUpload">
+            <Input
+              inputProps={{ inputProps: { accept: 'image/*' } }}
+              sx={{ display: 'none' }}
+              id="imageUpload"
+              name="imageUpload"
+              onChange={attachFile}
+              type="file"
+            />
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              className={classes.specialButtons}
+              component="span"
+              disableElevation
+            >
+              Upload a file from your device
+            </Button>
+          </label>
+        )}
         <Button
-          type="submit"
           size="large"
-          variant="outlined"
-          color="primary"
+          variant="text"
+          color="secondary"
           className={classes.specialButtons}
-          disableElevation
+          component="span"
+          startIcon={<DeleteIcon />}
         >
-          Upload a file from your device
-        </Button>
-        <Button size="large" variant="text" color="secondary" className={classes.specialButtons}>
-          <DeleteIcon sx={{ marginRight: 1 }} />
-          <Box component="span">Delete photo</Box>
+          Delete photo
         </Button>
       </Box>
     </Box>
