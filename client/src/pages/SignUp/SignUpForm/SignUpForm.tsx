@@ -38,7 +38,6 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const accountType = query.get('accountType');
-  console.log(accountType);
 
   return (
     <Formik
@@ -46,7 +45,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
         email: '',
         password: '',
         name: '',
-        accountType: '',
+        accountType: accountType ? accountType : 'pet_owner',
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required('Name is required').max(40, 'Name is too long'),
