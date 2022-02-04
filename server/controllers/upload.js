@@ -9,7 +9,7 @@ exports.updateProfilePhoto = asyncHandler(async (req, res, next) => {
   let profile;
 
   if (!req.file) {
-    res.status(500).json({ error: "Couldn't upload photo" });
+    res.status(400).json({ error: "Couldn't upload photo" });
   } else {
     if (userId) {
       profile = await Profile.findOneAndUpdate({ userId: userId }, { photo: req.file.location }, { new: true });
