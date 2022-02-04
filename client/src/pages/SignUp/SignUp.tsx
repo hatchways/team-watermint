@@ -16,13 +16,12 @@ export default function Register(): JSX.Element {
     { setSubmitting }: FormikHelpers<{ email: string; password: string; name: string; accountType: string }>,
   ) => {
     register(name, email, password, accountType).then((data) => {
-      console.log(accountType);
-      console.log(data);
       if (data.error) {
         console.error({ error: data.error.message });
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
+        window.location.reload();
         updateLoginContext(data.success);
       } else {
         // should not get here from backend but this catch is for an unknown issue
