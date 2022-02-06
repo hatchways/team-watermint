@@ -114,17 +114,13 @@ const Navbar: React.FC = () => {
   const renderMenuItems = () => {
     // TODO: conditionally render based on profile type
     return menuItems.map((menu) => {
-<<<<<<< HEAD
       if (location.pathname === '/login' && menu.authenticated === true) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
       if (location.pathname === '/signup' && menu.authenticated === true) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
-      if (menu.authenticated && menu.canView?.includes(profile?.accountType)) {
-=======
       if (menu.authenticated && menu.canView?.includes(profile.accountType)) {
->>>>>>> 6d8731dd73e9c6d1ea36fe22b58795814814c842
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
