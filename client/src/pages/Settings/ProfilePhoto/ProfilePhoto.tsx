@@ -18,13 +18,9 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
   const [isAttached, setIsAttached] = useState(false);
   const { updateSnackBarMessage } = useSnackBar();
 
-  const attachFile = (event: any) => {
+  const attachFile = () => {
     setIsAttached(true);
     updateSnackBarMessage('File attached and ready for upload');
-  };
-
-  const uploadFile = (event: any) => {
-    // TODO: Update state and message during integration
   };
 
   return (
@@ -37,9 +33,13 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
       <SettingHeader header={header} />
       <Box textAlign="center">
         {currentProfile.photo ? (
-          <img src={currentProfile.photo} className={classes.photo} />
+          <img src={currentProfile.photo} className={classes.photo} alt="Uploaded user profile photo" />
         ) : (
-          <img src={`https://robohash.org/${currentUser!.email}.png`} className={classes.photo} />
+          <img
+            src={`https://robohash.org/${currentUser!.email}.png`}
+            className={classes.photo}
+            alt="System default user profile photo"
+          />
         )}
       </Box>
       <Typography className={classes.textDescription} variant="body1">
@@ -53,7 +53,6 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
             variant="contained"
             color="primary"
             className={classes.specialButtons}
-            onClick={uploadFile}
             disableElevation
           >
             Upload
