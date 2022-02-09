@@ -6,7 +6,7 @@ import { User } from '../../interface/User';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Paper from '@mui/material/Paper';
-import getRequests from '../../helpers/APICalls/getRequests';
+import getRequests from '../../helpers/APICalls/getIncomingRequests';
 import { useState, useEffect, useReducer } from 'react';
 import { Request, RequestApiDataSuccess } from '../../interface/RequestApiData';
 import approveRequest from '../../helpers/APICalls/approveRequest';
@@ -60,7 +60,7 @@ export default function Sitters(): JSX.Element {
           key={requests[0]._id}
           start={requests[0].start}
           end={requests[0].end}
-          sitterId={requests[0].sitterId}
+          userId={requests[0].userId}
           bookingId={requests[0]._id}
           accepted={requests[0].accepted}
           declined={requests[0].declined}
@@ -79,7 +79,7 @@ export default function Sitters(): JSX.Element {
               key={ele._id}
               start={ele.start}
               end={ele.end}
-              sitterId={ele.sitterId}
+              userId={ele.userId}
               bookingId={ele._id}
               accepted={ele.accepted}
               declined={ele.declined}
@@ -100,7 +100,7 @@ export default function Sitters(): JSX.Element {
               key={ele._id}
               start={ele.start}
               end={ele.end}
-              sitterId={ele.sitterId}
+              userId={ele.userId}
               bookingId={ele._id}
               accepted={ele.accepted}
               declined={ele.declined}

@@ -10,7 +10,7 @@ import Popover from './Popover';
 interface Props {
   start: string;
   end: string;
-  sitterId: User;
+  userId: User;
   bookingId: string;
   accepted: boolean;
   declined: boolean;
@@ -21,7 +21,7 @@ interface Props {
 export default function Booking({
   start,
   end,
-  sitterId,
+  userId,
   bookingId,
   accepted,
   declined,
@@ -58,10 +58,10 @@ export default function Booking({
           </Typography>
         </Grid>
         <Grid item xs={2} paddingTop={1}>
-          <AvatarDisplay loggedIn={true} user={sitterId} />
+          <AvatarDisplay loggedIn={true} user={userId} />
         </Grid>
         <Grid item paddingTop={1}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 14 }}>{sitterId.name}</Typography>
+          <Typography sx={{ fontWeight: 'bold', fontSize: 14 }}>{userId.name}</Typography>
         </Grid>
       </Grid>
       <Grid item xs={2}>
