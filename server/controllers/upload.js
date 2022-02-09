@@ -6,14 +6,11 @@ const asyncHandler = require("express-async-handler");
 // @access Public
 exports.updateProfilePhoto = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
-  let profile;
 
   if (!req.file) {
     res.status(400).json({ error: "Couldn't upload photo" });
   } else {
-    if (userId) {
-      profile = await Profile.findOneAndUpdate({ userId: userId }, { photo: req.file.location }, { new: true });
-    }
+    const profile = await Profile.findOneAndUpdate({ userId: userId }, { photo: req.file.location }, { new: true });
     if (!profile) {
       res.status(404).json({ error: "Couldn't find profile" });
     } else {

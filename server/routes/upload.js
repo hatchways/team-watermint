@@ -6,6 +6,6 @@ const {
   updateProfilePhoto,
 } = require('../controllers/upload');
 
-router.route('/profile').post(protect, upload.single('photo'), updateProfilePhoto);
+router.route('/profile-photo').post(protect, upload.single('photo'), updateProfilePhoto);
 
 module.exports = router;
