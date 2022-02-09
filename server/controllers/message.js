@@ -26,7 +26,7 @@ exports.createMessage = asyncHandler(async (req, res, next) => {
     if (updatedConversation) {
       res.status(201).json({ success: "Successfully created message" });
     } else {
-      res.status(400).json({ error: "Could not make a conversation" });
+      res.status(404).json({ error: "Conversation not found" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

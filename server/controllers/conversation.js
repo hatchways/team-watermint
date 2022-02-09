@@ -59,7 +59,7 @@ exports.getMessages = asyncHandler(async (req, res, next) => {
         }
       });
     } else {
-      res.status(400).json({ error: "Could not get messages from a conversation" });
+      res.status(404).json({ error: "No conversation found" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message })
