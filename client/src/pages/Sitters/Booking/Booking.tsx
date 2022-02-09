@@ -14,6 +14,7 @@ interface Props {
   bookingId: string;
   accepted: boolean;
   declined: boolean;
+  popover?: boolean;
   handleBookingApproval: (bookingId: string, approval: boolean) => void;
 }
 
@@ -24,6 +25,7 @@ export default function Booking({
   bookingId,
   accepted,
   declined,
+  popover = true,
   handleBookingApproval,
 }: Props): JSX.Element {
   const classes = useStyles();
@@ -63,7 +65,7 @@ export default function Booking({
         </Grid>
       </Grid>
       <Grid item xs={2}>
-        <Popover bookingId={bookingId} handleBookingApproval={handleBookingApproval} />
+        {popover && <Popover bookingId={bookingId} handleBookingApproval={handleBookingApproval} />}
         <Typography sx={{ color: 'text.disabled', fontWeight: 'bold', letterSpacing: 0.5, textTransform: 'uppercase' }}>
           {approval(accepted, declined)}
         </Typography>

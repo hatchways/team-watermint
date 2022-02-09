@@ -8,6 +8,7 @@ interface Props {
   bookingId: string;
   handleBookingApproval: (bookingId: string, approval: boolean) => void;
 }
+
 export default function BookingPopover({ bookingId, handleBookingApproval }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
