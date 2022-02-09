@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/system';
 import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 import { User } from '../../../interface/User';
+import { Profile } from '../../../interface/Profile';
 import useStyles from './useStyles';
 import { useSnackBar } from '../../../context/useSnackbarContext';
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { useState } from 'react';
 interface ProfilePhotoProps {
   header: string;
   currentUser?: User;
-  currentProfile?: any;
+  currentProfile?: Profile;
 }
 
 const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, currentProfile }) => {
@@ -32,11 +33,11 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
     >
       <SettingHeader header={header} />
       <Box textAlign="center">
-        {currentProfile.photo ? (
+        {currentProfile?.photo ? (
           <img src={currentProfile.photo} className={classes.photo} alt="Uploaded user profile photo" />
         ) : (
           <img
-            src={`https://robohash.org/${currentUser!.email}.png`}
+            src={`https://robohash.org/${currentUser?.email}.png`}
             className={classes.photo}
             alt="System default user profile photo"
           />
