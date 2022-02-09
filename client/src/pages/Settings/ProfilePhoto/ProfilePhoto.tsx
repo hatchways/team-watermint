@@ -1,4 +1,4 @@
-import { Button, Input, Typography } from '@mui/material';
+import { Avatar, Button, Input, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/system';
 import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
@@ -32,14 +32,18 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
       }}
     >
       <SettingHeader header={header} />
-      <Box textAlign="center">
+      <Box textAlign="center" display="flex" justifyContent="center">
         {currentProfile?.photo ? (
-          <img src={currentProfile.photo} className={classes.photo} alt="Uploaded user profile photo" />
+          <Avatar
+            alt="Uploaded user profile photo"
+            src={currentProfile.photo}
+            sx={{ width: '13rem', height: '13rem' }}
+          />
         ) : (
-          <img
+          <Avatar
+            alt="Uploaded user profile photo"
             src={`https://robohash.org/${currentUser?.email}.png`}
-            className={classes.photo}
-            alt="System default user profile photo"
+            sx={{ width: '13rem', height: '13rem' }}
           />
         )}
       </Box>

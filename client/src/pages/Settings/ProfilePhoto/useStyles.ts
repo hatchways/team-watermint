@@ -1,48 +1,42 @@
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-  photo: {
-    width: '180px',
-    height: '180px',
-    objectFit: 'cover',
-    borderRadius: '50%',
-  },
   textDescription: {
     width: '40%',
     color: '#555',
     textAlign: 'center',
     '&.MuiTypography-body1': {
-      margin: '20px auto',
-      fontSize: 16,
+      margin: '1.25rem auto',
+      fontSize: '1rem',
     },
   },
   specialButtons: {
     '&.MuiButton-outlinedPrimary': {
       textTransform: 'none',
-      border: '1.5px solid',
-      fontSize: 16,
-      padding: '20px 50px',
+      border: '0.1rem solid',
+      fontSize: '1rem',
+      padding: '1.25rem 1.5rem',
       '&:hover': {
-        border: '1.5px solid',
+        border: '0.1rem solid',
       },
     },
     '&.MuiButton-containedPrimary': {
       textTransform: 'none',
-      fontSize: 16,
-      padding: '21px 51px',
+      fontSize: '1rem',
+      padding: '1.35rem 1.6rem',
     },
     '&.MuiButton-textSecondary': {
       textTransform: 'none',
-      fontSize: 16,
+      fontSize: '1rem',
       fontWeight: 400,
-      padding: '21px 51px',
-      marginTop: 20,
+      padding: '1.25rem 1.5rem',
+      marginTop: '1.25rem',
     },
   },
   buttonContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: 350,
+    width: '22rem',
     margin: '0 auto',
     justifyContent: 'center',
     '& label': {
