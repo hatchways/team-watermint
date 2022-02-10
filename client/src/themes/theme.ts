@@ -12,11 +12,5 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Open Sans", "sans-serif"',
     fontSize: 12,
-    body1: {
-      fontWeight: 'bold',
-    },
-    button: {
-      fontWeight: 700,
-    },
   },
 });

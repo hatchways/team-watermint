@@ -41,10 +41,10 @@ const FormInput: React.FC<FormInputProps> = ({
     <FormControl sx={{ width: '100%', marginBottom: 2 }} variant="standard">
       <InputLabel
         sx={{
+          color: '#000000',
           fontSize: 17.5,
           fontWeight: 900,
           textTransform: 'uppercase',
-          color: '#000',
           letterSpacing: '1.3px',
         }}
         shrink
