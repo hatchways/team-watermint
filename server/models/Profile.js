@@ -8,7 +8,7 @@ const profileSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    default: "",
+    default: "pet_owner",
     enum: ['pet_owner', 'pet_sitter'],
   },
   name: {
