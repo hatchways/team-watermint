@@ -120,7 +120,7 @@ const Navbar: React.FC = () => {
       if (location.pathname === '/signup' && menu.authenticated === true) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
-      if (menu.authenticated && menu.canView?.includes(profile.accountType)) {
+      if (menu.authenticated && menu.canView?.includes(profile?.accountType)) {
         return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
