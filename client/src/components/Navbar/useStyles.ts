@@ -9,11 +9,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   transparentNavbar: {
     boxShadow: 'none',
+    position: 'absolute',
+    zIndex: '1',
     background: 'none',
   },
+
   navbarItem: {
-    color: theme.palette.grey[900],
+    color: theme.palette.secondary.main,
     fontWeight: 700,
+    textTransform: 'uppercase',
     textDecoration: 'none',
     transition: 'color 120ms ease-in-out',
     '&:hover': {
