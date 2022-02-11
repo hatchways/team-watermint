@@ -15,7 +15,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 
   navbarItem: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.grey[700],
     fontWeight: 700,
     textTransform: 'uppercase',
     textDecoration: 'none',

@@ -5,6 +5,7 @@ import { Formik, FormikHelpers } from 'formik';
 import FormInput from '../../../components/FormInput/FormInput';
 import SettingHeader from '../../../components/SettingsHeader/SettingsHeader';
 import { User } from '../../../interface/User';
+import { Profile } from '../../../interface/Profile';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { makeStyles } from '@mui/styles';
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
 interface EditProfileProps {
   header: string;
   currentUser?: User; // set to optional but always passed in from settings
-  currentProfile?: any;
+  currentProfile?: Profile;
 }
 
 const EditProfile: React.FC<EditProfileProps> = ({ header, currentUser, currentProfile }) => {
@@ -85,11 +86,11 @@ const EditProfile: React.FC<EditProfileProps> = ({ header, currentUser, currentP
         initialValues={{
           name: currentUser?.name || '',
           email: currentUser?.email || '',
-          gender: currentProfile.gender || 'none',
-          birthday: currentProfile.birthday || new Date(),
-          telephone: currentProfile.telephone || '',
-          address: currentProfile.address || '',
-          description: currentProfile.description || '',
+          gender: currentProfile?.gender || 'none',
+          birthday: currentProfile?.birthday || new Date(),
+          telephone: currentProfile?.telephone || '',
+          address: currentProfile?.address || '',
+          description: currentProfile?.description || '',
         }}
         onSubmit={handleSubmit}
       >
