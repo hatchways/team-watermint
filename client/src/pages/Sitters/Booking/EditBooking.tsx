@@ -1,9 +1,5 @@
 import * as React from 'react';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { SettingsOutlined } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton, Button, Popover } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 interface Props {

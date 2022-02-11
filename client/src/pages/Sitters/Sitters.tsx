@@ -1,20 +1,14 @@
-import PageContainer from '../../components/PageContainer/PageContainer';
-import Booking from './Booking/Booking';
-import { useAuth } from '../../context/useAuthContext';
-import { useHistory } from 'react-router-dom';
-import { User } from '../../interface/User';
-import { CircularProgress, Grid, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import Paper from '@mui/material/Paper';
+import { useState, useEffect } from 'react';
+import { Grid, Typography, Paper } from '@mui/material';
 import getRequests from '../../helpers/APICalls/getIncomingRequests';
-import { useState, useEffect, useReducer } from 'react';
-import { Request, RequestApiDataSuccess } from '../../interface/RequestApiData';
 import approveRequest from '../../helpers/APICalls/approveRequest';
-import { searchUsers } from '../../helpers/APICalls/searchUsers';
+import { Request } from '../../interface/RequestApiData';
+import Booking from './Booking/Booking';
 import Calendar from './Calendar/Calendar';
-import { makeStyles } from '@mui/styles';
+import useStyles from './useStyles';
 
 export default function Sitters(): JSX.Element {
+  const classes = useStyles();
   const [requests, setRequests] = useState<Request[]>([]);
   const [pastRequests, setPastRequests] = useState<Request[]>([]);
 
@@ -115,7 +109,7 @@ export default function Sitters(): JSX.Element {
   }
 
   return (
-    <Grid container rowSpacing={2} columnSpacing={10} justifyContent="center" alignItems="flex-start" sx={{ pt: 7 }}>
+    <Grid container rowSpacing={2} columnSpacing={10} justifyContent="center" alignItems="flex-start" paddingTop={7}>
       <Grid item xs={'auto'}>
         <Grid container direction="column" spacing={3}>
           <Grid item>
@@ -127,7 +121,11 @@ export default function Sitters(): JSX.Element {
             </Paper>
           </Grid>
           <Grid item>
-            <Paper elevation={3} sx={{ paddingX: 4, paddingY: 4, maxHeight: 400, overflow: 'auto' }}>
+            <Paper
+              className={classes.scrollBar}
+              elevation={3}
+              sx={{ paddingX: 4, paddingY: 4, maxHeight: 400, overflow: 'auto' }}
+            >
               <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase' }}>
                 Current bookings:
               </Typography>
@@ -140,7 +138,6 @@ export default function Sitters(): JSX.Element {
           </Grid>
         </Grid>
       </Grid>
-
       <Grid item xs={'auto'}>
         <Paper elevation={3} sx={{ minWidth: 450 }}>
           <Calendar requests={pastRequests.concat(requests)}></Calendar>

@@ -1,12 +1,7 @@
-import { Card, CircularProgress, Grid, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography, Paper } from '@mui/material';
 import AvatarDisplay from '../../../components/AvatarDisplay/AvatarDisplay';
 import { User } from '../../../interface/User';
-import { Box } from '@mui/system';
-import Paper from '@mui/material/Paper';
-import useStyles from './useStyles';
-import { Request } from '../../../interface/RequestApiData';
-import Popover from './Popover';
-
+import EditBooking from './EditBooking';
 interface Props {
   start: string;
   end: string;
@@ -30,9 +25,7 @@ export default function Booking({
   border = false,
   handleRequestApproval,
 }: Props): JSX.Element {
-  const classes = useStyles();
-
-  function approval(approve: boolean, deny: boolean): string {
+  function renderApprovalStatus(approve: boolean, deny: boolean): string {
     if (approve) {
       return 'Accepted';
     } else if (deny) {
@@ -60,8 +53,8 @@ export default function Booking({
         alignItems="center"
         paddingY={2}
         paddingLeft={2}
-        paddingRight={1}
-        spacing={2}
+        paddingRight={2}
+        spacing={3}
       >
         <Grid item xs={9}>
           <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>
@@ -82,11 +75,11 @@ export default function Booking({
               fontSize: 12,
             }}
           >
-            {approval(accepted, declined)}
+            {renderApprovalStatus(accepted, declined)}
           </Typography>
         </Grid>
         <Grid item xs={1} alignSelf="flex-start">
-          {editable && <Popover requestId={requestId} handleRequestApproval={handleRequestApproval} />}
+          {editable && <EditBooking requestId={requestId} handleRequestApproval={handleRequestApproval} />}
         </Grid>
       </Grid>
     </Paper>
