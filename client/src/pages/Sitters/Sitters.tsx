@@ -12,42 +12,44 @@ import { Request, RequestApiDataSuccess } from '../../interface/RequestApiData';
 import approveRequest from '../../helpers/APICalls/approveRequest';
 import { searchUsers } from '../../helpers/APICalls/searchUsers';
 import Calendar from './Calendar/Calendar';
+import { makeStyles } from '@mui/styles';
 
 export default function Sitters(): JSX.Element {
   const [requests, setRequests] = useState<Request[]>([]);
   const [pastRequests, setPastRequests] = useState<Request[]>([]);
+
   useEffect(() => {
     getRequests().then((data) => {
       if (data.error) {
         console.error({ error: data.error.message });
       } else if (data.success) {
-        const reqs: Request[] = [];
-        const pastReqs: Request[] = [];
+        const futureRequests: Request[] = [];
+        const pastRequests: Request[] = [];
         const today = new Date();
-        data.success.requests.map((x) => {
-          if (new Date(x.start) < today) {
-            pastReqs.push(x);
+        data.success.requests.map((request) => {
+          if (new Date(request.start) < today) {
+            pastRequests.push(request);
           } else {
-            reqs.push(x);
+            futureRequests.push(request);
           }
         });
 
-        setRequests(reqs);
-        setPastRequests(pastReqs);
+        setRequests(futureRequests);
+        setPastRequests(pastRequests);
       } else {
         console.error({ data });
       }
     });
   }, []);
 
-  function handleBookingApproval(bookingId: string, approve: boolean) {
-    approveRequest(bookingId, approve).then(() => {
+  function handleRequestApproval(requestId: string, approve: boolean) {
+    approveRequest(requestId, approve).then(() => {
       setRequests(
-        requests.map((obj) => {
-          if (obj._id === bookingId) {
-            return { ...obj, accepted: approve, declined: !approve };
+        requests.map((request) => {
+          if (request._id === requestId) {
+            return { ...request, accepted: approve, declined: !approve };
           }
-          return obj;
+          return request;
         }),
       );
     });
@@ -61,10 +63,10 @@ export default function Sitters(): JSX.Element {
           start={requests[0].start}
           end={requests[0].end}
           userId={requests[0].userId}
-          bookingId={requests[0]._id}
+          requestId={requests[0]._id}
           accepted={requests[0].accepted}
           declined={requests[0].declined}
-          handleBookingApproval={handleBookingApproval}
+          handleRequestApproval={handleRequestApproval}
         />
       );
     }
@@ -72,20 +74,20 @@ export default function Sitters(): JSX.Element {
 
   function renderOtherBookings() {
     if (requests.length > 1) {
-      return requests.slice(1).map((ele) => {
+      return requests.map((request) => {
+        if (request === requests[0]) return <></>;
         return (
-          <Box key={ele._id} sx={{ border: 1, borderColor: 'rgb(0,0,0,.15)', padding: 1, marginY: 1 }}>
-            <Booking
-              key={ele._id}
-              start={ele.start}
-              end={ele.end}
-              userId={ele.userId}
-              bookingId={ele._id}
-              accepted={ele.accepted}
-              declined={ele.declined}
-              handleBookingApproval={handleBookingApproval}
-            />
-          </Box>
+          <Booking
+            key={request._id}
+            start={request.start}
+            end={request.end}
+            userId={request.userId}
+            requestId={request._id}
+            accepted={request.accepted}
+            declined={request.declined}
+            border
+            handleRequestApproval={handleRequestApproval}
+          />
         );
       });
     }
@@ -93,50 +95,54 @@ export default function Sitters(): JSX.Element {
 
   function renderPastBookings() {
     if (pastRequests.length) {
-      return pastRequests.map((ele) => {
+      return pastRequests.map((request) => {
         return (
-          <Box key={ele._id} sx={{ border: 1, borderColor: 'rgb(0,0,0,.15)', padding: 1, marginY: 1 }}>
-            <Booking
-              key={ele._id}
-              start={ele.start}
-              end={ele.end}
-              userId={ele.userId}
-              bookingId={ele._id}
-              accepted={ele.accepted}
-              declined={ele.declined}
-              popover={false}
-              handleBookingApproval={handleBookingApproval}
-            />
-          </Box>
+          <Booking
+            key={request._id}
+            start={request.start}
+            end={request.end}
+            userId={request.userId}
+            requestId={request._id}
+            accepted={request.accepted}
+            declined={request.declined}
+            editable={false}
+            border
+            handleRequestApproval={handleRequestApproval}
+          />
         );
       });
     }
   }
 
   return (
-    <Grid container>
-      <Grid item xs={6} paddingLeft={6}>
-        <Paper elevation={4} sx={{ p: 2, margin: 'auto', marginTop: 5, maxWidth: 500, flexGrow: 1 }}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 12, textTransform: 'uppercase' }}>
-            Your next booking:
-          </Typography>
-          <Box>{renderFirstBooking()}</Box>
-        </Paper>
-        <Paper elevation={4} sx={{ p: 2, margin: 'auto', marginTop: 2, maxWidth: 500, flexGrow: 1 }}>
-          <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
-            <Typography sx={{ fontWeight: 'bold', fontSize: 12, textTransform: 'uppercase' }}>
-              Current bookings:
-            </Typography>
-            {renderOtherBookings()}
-            <Typography sx={{ fontWeight: 'bold', fontSize: 12, textTransform: 'uppercase' }}>
-              Past bookings:
-            </Typography>
-            {renderPastBookings()}
-          </Box>
-        </Paper>
+    <Grid container rowSpacing={2} columnSpacing={10} justifyContent="center" alignItems="flex-start" sx={{ pt: 7 }}>
+      <Grid item xs={'auto'}>
+        <Grid container direction="column" spacing={3}>
+          <Grid item>
+            <Paper elevation={3} sx={{ paddingX: 4, paddingY: 4, minWidth: 450 }}>
+              <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase' }}>
+                Your next booking:
+              </Typography>
+              {renderFirstBooking()}
+            </Paper>
+          </Grid>
+          <Grid item>
+            <Paper elevation={3} sx={{ paddingX: 4, paddingY: 4, maxHeight: 400, overflow: 'auto' }}>
+              <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase' }}>
+                Current bookings:
+              </Typography>
+              {renderOtherBookings()}
+              <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase', marginTop: 3 }}>
+                Past bookings:
+              </Typography>
+              {renderPastBookings()}
+            </Paper>
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={6} paddingRight={6}>
-        <Paper elevation={4} sx={{ p: 2, margin: 'auto', marginTop: 5, maxWidth: 500, flexGrow: 1 }}>
+
+      <Grid item xs={'auto'}>
+        <Paper elevation={3} sx={{ minWidth: 450 }}>
           <Calendar requests={pastRequests.concat(requests)}></Calendar>
         </Paper>
       </Grid>

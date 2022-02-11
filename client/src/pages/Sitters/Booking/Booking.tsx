@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, Stack, Typography } from '@mui/material';
+import { Card, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import AvatarDisplay from '../../../components/AvatarDisplay/AvatarDisplay';
 import { User } from '../../../interface/User';
 import { Box } from '@mui/system';
@@ -11,22 +11,24 @@ interface Props {
   start: string;
   end: string;
   userId: User;
-  bookingId: string;
+  requestId: string;
   accepted: boolean;
   declined: boolean;
-  popover?: boolean;
-  handleBookingApproval: (bookingId: string, approval: boolean) => void;
+  editable?: boolean;
+  border?: boolean;
+  handleRequestApproval: (requestId: string, approval: boolean) => void;
 }
 
 export default function Booking({
   start,
   end,
   userId,
-  bookingId,
+  requestId,
   accepted,
   declined,
-  popover = true,
-  handleBookingApproval,
+  editable = true,
+  border = false,
+  handleRequestApproval,
 }: Props): JSX.Element {
   const classes = useStyles();
 
@@ -40,39 +42,53 @@ export default function Booking({
     }
   }
 
-  function parseStartDate(d: Date): string {
-    return d.toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short', hourCycle: 'h12' });
+  function parseStartDate(start: Date): string {
+    return start.toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short', hourCycle: 'h12' });
   }
 
-  function parseEndDate(s: Date, e: Date): string {
-    if (s.getDay() === e.getDay()) return e.toLocaleString('en-GB', { timeStyle: 'short', hourCycle: 'h12' });
-    return e.toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short', hourCycle: 'h12' });
+  function parseEndDate(start: Date, end: Date): string {
+    if (start.getDay() === end.getDay()) return end.toLocaleString('en-GB', { timeStyle: 'short', hourCycle: 'h12' });
+    return end.toLocaleString('en-GB', { timeStyle: 'short', hourCycle: 'h12' });
   }
 
   return (
-    <Grid container alignItems={'center'} padding={1}>
-      <Grid container xs={10} alignItems={'center'}>
-        <Grid item xs={12}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 15 }}>
+    <Paper {...(border ? { variant: 'outlined' } : {})} elevation={0} sx={{ marginY: 1 }}>
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        paddingY={2}
+        paddingLeft={2}
+        paddingRight={1}
+        spacing={2}
+      >
+        <Grid item xs={9}>
+          <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>
             {parseStartDate(new Date(start)) + ' - ' + parseEndDate(new Date(start), new Date(end))}
           </Typography>
+          <Stack spacing={2} marginTop={1} direction="row" justifyContent="flex-start" alignItems="center">
+            <AvatarDisplay loggedIn={true} user={userId} />
+            <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>{userId.name}</Typography>
+          </Stack>
         </Grid>
-        <Grid item xs={2} paddingTop={1}>
-          <AvatarDisplay loggedIn={true} user={userId} />
+        <Grid item xs={2}>
+          <Typography
+            sx={{
+              color: 'lightgray',
+              fontWeight: 'bold',
+              letterSpacing: 0.5,
+              textTransform: 'uppercase',
+              fontSize: 12,
+            }}
+          >
+            {approval(accepted, declined)}
+          </Typography>
         </Grid>
-        <Grid item paddingTop={1}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 14 }}>{userId.name}</Typography>
+        <Grid item xs={1} alignSelf="flex-start">
+          {editable && <Popover requestId={requestId} handleRequestApproval={handleRequestApproval} />}
         </Grid>
       </Grid>
-      <Grid item xs={2}>
-        {popover && <Popover bookingId={bookingId} handleBookingApproval={handleBookingApproval} />}
-        <Typography sx={{ color: 'text.disabled', fontWeight: 'bold', letterSpacing: 0.5, textTransform: 'uppercase' }}>
-          {approval(accepted, declined)}
-        </Typography>
-      </Grid>
-    </Grid>
+    </Paper>
   );
-}
-{
-  /* <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}> */
 }

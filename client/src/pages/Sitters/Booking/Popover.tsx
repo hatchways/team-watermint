@@ -3,13 +3,15 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { SettingsOutlined } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 interface Props {
-  bookingId: string;
-  handleBookingApproval: (bookingId: string, approval: boolean) => void;
+  requestId: string;
+  handleRequestApproval: (requestId: string, approval: boolean) => void;
 }
 
-export default function BookingPopover({ bookingId, handleBookingApproval }: Props) {
+export default function BookingPopover({ requestId, handleRequestApproval }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,10 +26,10 @@ export default function BookingPopover({ bookingId, handleBookingApproval }: Pro
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div>
-      <Button aria-describedby={id} variant="text" onClick={handleClick} color="inherit" sx={{ fontSize: 1 }}>
-        <SettingsOutlined></SettingsOutlined>
-      </Button>
+    <>
+      <IconButton size="small" sx={{ marginTop: -3 }} onClick={handleClick}>
+        <SettingsIcon fontSize="small" htmlColor="lightgray" />
+      </IconButton>
       <Popover
         id={id}
         open={open}
@@ -40,7 +42,8 @@ export default function BookingPopover({ bookingId, handleBookingApproval }: Pro
       >
         <Button
           onClick={() => {
-            handleBookingApproval(bookingId, true);
+            handleRequestApproval(requestId, true);
+            handleClose();
           }}
           color="success"
           size="small"
@@ -51,7 +54,8 @@ export default function BookingPopover({ bookingId, handleBookingApproval }: Pro
         </Button>
         <Button
           onClick={() => {
-            handleBookingApproval(bookingId, false);
+            handleRequestApproval(requestId, false);
+            handleClose();
           }}
           color="warning"
           size="small"
@@ -61,6 +65,6 @@ export default function BookingPopover({ bookingId, handleBookingApproval }: Pro
           Decline Booking
         </Button>
       </Popover>
-    </div>
+    </>
   );
 }
