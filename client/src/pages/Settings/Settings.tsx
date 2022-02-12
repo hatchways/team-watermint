@@ -7,6 +7,7 @@ import { makeStyles } from '@mui/styles';
 import SettingsWrapper from '../../components/SettingsWrapper/SettingsWrapper';
 import EditProfile from './EditProfile/EditProfile';
 import SettingHeader from '../../components/SettingsHeader/SettingsHeader';
+import Availability from './Availability/Availability';
 
 const settingsMenu = [
   {
@@ -22,7 +23,7 @@ const settingsMenu = [
   {
     name: 'Availability',
     to: '/profile/settings/availability',
-    component: <SettingHeader header="Availability" />,
+    component: <Availability header="Availability" />,
   },
   {
     name: 'Payment methods',
