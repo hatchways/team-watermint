@@ -8,12 +8,12 @@ export const theme = createTheme({
     info: {
       main: '#0088ff',
     },
+    secondary: {
+      main: '#555',
+    },
   },
   typography: {
     fontFamily: '"Roboto", "Open Sans", "sans-serif"',
     fontSize: 12,
-    button: {
-      fontWeight: 700,
-    },
   },
 });

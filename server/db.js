@@ -7,3 +7,5 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
+require("dotenv").config({ path: ".env" });

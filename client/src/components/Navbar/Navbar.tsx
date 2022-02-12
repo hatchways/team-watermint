@@ -13,7 +13,6 @@ import {
   styled,
 } from '@mui/material';
 import { AccountType } from '../../types/AccountType';
-
 import lovingSitterLogo from '../../images/logo.svg';
 import { useStyles } from './useStyles';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -132,7 +131,7 @@ const Navbar: React.FC = () => {
     <Grid
       className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
       justifyContent="space-between"
-      alignItems="center"
+      alignItems="top"
       container
     >
       <Grid xs={4} md={6} item>
