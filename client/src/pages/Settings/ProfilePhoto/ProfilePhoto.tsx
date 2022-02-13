@@ -6,7 +6,8 @@ import { User } from '../../../interface/User';
 import { Profile } from '../../../interface/Profile';
 import useStyles from './useStyles';
 import { useSnackBar } from '../../../context/useSnackbarContext';
-import { useState } from 'react';
+import { uploadProfilePhoto, deleteProfilePhoto } from '../../../helpers/APICalls/editProfile';
+import { useAuth } from '../../../context/useAuthContext';
 
 interface ProfilePhotoProps {
   header: string;
@@ -16,12 +17,35 @@ interface ProfilePhotoProps {
 
 const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, currentProfile }) => {
   const classes = useStyles();
-  const [isAttached, setIsAttached] = useState(false);
   const { updateSnackBarMessage } = useSnackBar();
+  const { updateProfileContext } = useAuth();
 
-  const attachFile = () => {
-    setIsAttached(true);
-    updateSnackBarMessage('File attached and ready for upload');
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      uploadProfilePhoto(event.target.files[0]).then((data) => {
+        if (data.error) {
+          updateSnackBarMessage(data.error.message);
+        } else if (data.success) {
+          updateProfileContext(data.success);
+          updateSnackBarMessage('Successfully uploaded file!');
+        } else {
+          updateSnackBarMessage('An unexpected error occurred. Please try again');
+        }
+      });
+    }
+  };
+
+  const onClick = () => {
+    deleteProfilePhoto().then((data) => {
+      if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        updateProfileContext(data.success);
+        updateSnackBarMessage(data.success.message);
+      } else {
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
   };
 
   return (
@@ -51,44 +75,32 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
         Be sure to use a photo that clearly shows your face
       </Typography>
       <Box marginTop={5} className={classes.buttonContainer}>
-        {isAttached ? (
+        <label htmlFor="imageUpload">
+          <Input
+            inputProps={{ inputprops: { accept: 'image/*' } }}
+            sx={{ display: 'none' }}
+            id="imageUpload"
+            name="imageUpload"
+            onChange={onChangeHandler}
+            type="file"
+          />
           <Button
-            type="submit"
             size="large"
-            variant="contained"
+            variant="outlined"
             color="primary"
             className={classes.specialButtons}
+            component="span"
             disableElevation
           >
-            Upload
+            Upload a file from your device
           </Button>
-        ) : (
-          <label htmlFor="imageUpload">
-            <Input
-              inputProps={{ inputProps: { accept: 'image/*' } }}
-              sx={{ display: 'none' }}
-              id="imageUpload"
-              name="imageUpload"
-              onChange={attachFile}
-              type="file"
-            />
-            <Button
-              size="large"
-              variant="outlined"
-              color="primary"
-              className={classes.specialButtons}
-              component="span"
-              disableElevation
-            >
-              Upload a file from your device
-            </Button>
-          </label>
-        )}
+        </label>
         <Button
           size="large"
           variant="text"
           color="secondary"
           className={classes.specialButtons}
+          onClick={onClick}
           component="span"
           startIcon={<DeleteIcon />}
         >
