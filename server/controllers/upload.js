@@ -25,14 +25,12 @@ exports.updateProfilePhoto = asyncHandler(async (req, res, next) => {
 });
 
 // @route DELETE /uploads/profile
-// @desc Update user's profile photo
+// @desc Delete user's profile photo
 // @access Public
 exports.deleteProfilePhoto = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
   const profile = await Profile.findOne({ userId: userId });
-
-  // const profile = await Profile.findOneAndUpdate({ userId: userId }, { photo: '' }, { new: true });
 
   if (!profile) {
     res.status(404).json({ error: { message: "Couldn't find profile" } });
