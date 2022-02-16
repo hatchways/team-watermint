@@ -29,6 +29,6 @@ exports.createMessage = asyncHandler(async (req, res, next) => {
       res.status(404).json({ error: "Conversation not found" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });

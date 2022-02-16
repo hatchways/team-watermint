@@ -38,7 +38,7 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
       }
     });
   } else {
-    res.status(400).json({ error: "Could not get user's conversations" })
+    res.status(404).json({ error: "Conversations not found" })
   }
 });
 
@@ -62,6 +62,6 @@ exports.getMessages = asyncHandler(async (req, res, next) => {
       res.status(404).json({ error: "No conversation found" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(500).json({ error: error.message })
   }
 });
