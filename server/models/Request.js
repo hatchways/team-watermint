@@ -18,6 +18,12 @@ const requestSchema = new mongoose.Schema({
   end: {
     type: Date,
     required: true,
+    validate: {
+      validator: function (end) {
+        return this.start < end;
+      },
+      message: "End date must be after start date",
+    },
   },
   status: {
     type: String,
