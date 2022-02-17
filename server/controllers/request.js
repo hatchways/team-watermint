@@ -32,26 +32,7 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   const { sitterId, start, end } = req.body;
   const userId = req.user.id;
 
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-
-  if (!startDate.getDate()) {
-    res.status(400);
-    throw new Error("Invalid start date");
-  }
-
-  if (!endDate.getDate()) {
-    res.status(400);
-    throw new Error("Invalid end date");
-  }
-
-  if (startDate >= endDate) {
-    res.status(400);
-    throw new Error("End date must be later than start date");
-  }
-
   const sitter = await User.findById(sitterId);
-
   if (!sitter) {
     res.status(404);
     throw new Error("Sitter not found");
@@ -65,8 +46,8 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   const request = await Request.create({
     userId,
     sitterId,
-    start: startDate,
-    end: endDate,
+    start: new Date(start),
+    end: new Date(end),
   });
 
   if (request) {

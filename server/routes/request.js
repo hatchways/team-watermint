@@ -6,11 +6,15 @@ const {
   createRequest,
   handleRequest,
 } = require("../controllers/request");
+const {
+  validateCreateRequest,
+  validateHandleRequest,
+} = require("../middleware/request.validate");
 
 router.route("/").get(protect, loadRequests);
 
-router.route("/").post(protect, createRequest);
+router.route("/").post(protect, validateCreateRequest, createRequest);
 
-router.route("/:requestId").put(protect, handleRequest);
+router.route("/:requestId").put(protect, validateHandleRequest, handleRequest);
 
 module.exports = router;
