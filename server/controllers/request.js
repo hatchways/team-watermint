@@ -70,36 +70,34 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route PUT /requests/approval
-// @desc update a request with approved or declined
+// @route PUT /requests/:requestid
+// @desc update a request with one of the following status:
+//       ["pending", "accepted", "declined", "completed"]
 // @access Private
-exports.approveRequest = asyncHandler(async (req, res, next) => {
-  const { requestId, accept } = req.body;
-  let accepted;
-  try {
-    accepted = JSON.parse(accept.toLowerCase());
-    if (typeof accepted !== "boolean") {
-      throw new TypeError();
-    }
-  } catch (err) {
-    res.status(400);
-    throw new Error("Invalid request data");
+exports.handleRequest = asyncHandler(async (req, res, next) => {
+  const { status } = req.body;
+  const { requestId } = req.params;
+
+  const request = await Request.findById(requestId);
+
+  if (!request) {
+    res.status(404);
+    throw new Error("Request not found");
   }
 
-  try {
-    const request = await Request.findById(requestId);
+  if (request.sitterId.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("Permission denied");
+  }
 
-    request.accepted = accepted;
-    request.declined = !accepted;
-    await request.save();
+  request.status = status;
+  const saved = await request.save();
 
+  if (saved) {
     res.status(200).json({
       success: {
         request,
       },
     });
-  } catch (err) {
-    res.status(400);
-    throw new Error("Invalid request data");
   }
 });
