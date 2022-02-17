@@ -21,6 +21,7 @@ export default function Dashboard(): JSX.Element {
 
   const profileCards = [
     {
+      id: 'b5a02958-e5ff-4969-ad3b-0d2ddc5f129e',
       name: 'Norma Byers',
       photo:
         'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
@@ -31,6 +32,7 @@ export default function Dashboard(): JSX.Element {
       pay: 14,
     },
     {
+      id: '2dfb07e8-980a-4e9f-a7e2-4c87479ae627',
       name: 'Jessica Pearson',
       photo:
         'https://images.unsplash.com/photo-1606122017369-d782bbb78f32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
@@ -41,6 +43,7 @@ export default function Dashboard(): JSX.Element {
       pay: 15,
     },
     {
+      id: '86689e76-b4c3-41a1-9e68-9bffe4291df5',
       name: 'Charles Compton',
       photo:
         'https://images.unsplash.com/photo-1484517186945-df8151a1a871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1949&q=80',
@@ -51,6 +54,7 @@ export default function Dashboard(): JSX.Element {
       pay: 20,
     },
     {
+      id: 'aa523eb0-ca63-40a8-8f6d-75b023f3296f',
       name: 'Norma Byers',
       photo:
         'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
@@ -61,6 +65,7 @@ export default function Dashboard(): JSX.Element {
       pay: 14,
     },
     {
+      id: 'df8ea58a-0101-4958-9612-50faeee53721',
       name: 'Jessica Pearson',
       photo:
         'https://images.unsplash.com/photo-1606122017369-d782bbb78f32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
@@ -71,6 +76,7 @@ export default function Dashboard(): JSX.Element {
       pay: 15,
     },
     {
+      id: 'a6bdc99c-3378-4737-8a40-603a75403c34',
       name: 'Charles Compton',
       photo:
         'https://images.unsplash.com/photo-1484517186945-df8151a1a871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1949&q=80',
@@ -81,6 +87,14 @@ export default function Dashboard(): JSX.Element {
       pay: 20,
     },
   ];
+
+  const profileItems = profileCards.map((profileCard) => {
+    return (
+      <Grid key={profileCard.id} item>
+        <ProfileCard {...profileCard} />
+      </Grid>
+    );
+  });
 
   return (
     <PageContainer>
@@ -130,13 +144,7 @@ export default function Dashboard(): JSX.Element {
         <Grid xs={12} item>
           <Box sx={{ width: '85%', margin: '2rem auto 0' }}>
             <Grid container justifyContent="space-evenly">
-              {profileCards.map((profileCard, i) => {
-                return (
-                  <Grid key={i} item>
-                    <ProfileCard {...profileCard} />
-                  </Grid>
-                );
-              })}
+              {profileItems}
               <Grid item xs={12} className={classes.buttonContainer}>
                 <Button variant="outlined" color="secondary" size="large">
                   Show more
