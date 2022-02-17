@@ -19,27 +19,27 @@ exports.loadRequests = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route POST /requests/create
-// @desc create a new request
+// @route POST /requests
+// @desc User creates a new request
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
   const { sitterId, start, end } = req.body;
   const userId = req.user.id;
 
-  const startDate = new Date(parseInt(start));
-  const endDate = new Date(parseInt(end));
+  const startDate = new Date(start);
+  const endDate = new Date(end);
 
-  if (!(startDate instanceof Date) || isNaN(startDate)) {
+  if (!startDate.getDate()) {
     res.status(400);
     throw new Error("Invalid start date");
   }
 
-  if (!(endDate instanceof Date) || isNaN(endDate)) {
+  if (!endDate.getDate()) {
     res.status(400);
     throw new Error("Invalid end date");
   }
 
-  if (startDate.getTime() >= endDate.getTime()) {
+  if (startDate >= endDate) {
     res.status(400);
     throw new Error("End date must be later than start date");
   }
@@ -47,8 +47,13 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   const sitter = await User.findById(sitterId);
 
   if (!sitter) {
-    res.status(400);
+    res.status(404);
     throw new Error("Sitter not found");
+  }
+
+  if (sitterId === userId) {
+    res.status(400);
+    throw new Error("Invalid sitterId: cannot create a request to oneself");
   }
 
   const request = await Request.create({
@@ -64,9 +69,6 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
         request,
       },
     });
-  } else {
-    res.status(400);
-    throw new Error("Invalid request data");
   }
 });
 
