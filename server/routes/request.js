@@ -4,13 +4,13 @@ const protect = require("../middleware/auth");
 const {
   loadRequests,
   createRequest,
-  approveRequest,
+  handleRequest,
 } = require("../controllers/request");
 
 router.route("/").get(protect, loadRequests);
 
-router.route("/create").post(protect, createRequest);
+router.route("/").post(protect, createRequest);
 
-router.route("/approval").put(protect, approveRequest);
+router.route("/:requestId").put(protect, handleRequest);
 
 module.exports = router;
