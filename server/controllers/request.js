@@ -2,15 +2,21 @@ const Request = require("../models/Request");
 const asyncHandler = require("express-async-handler");
 
 // @route GET /requests
-// @desc load requests for logged in user
+// @desc load requests for logged in sitter
 // @access Private
 exports.loadRequests = asyncHandler(async (req, res, next) => {
-  const requests = await Request.find({ userId: req.user.id });
-
-  if (!requests) {
-    res.status(404);
-    throw new Error("No requests found");
-  }
+  const requests = await Request.find({ sitterId: req.user.id })
+    .populate({
+      path: "userId",
+      model: "user",
+      select: "name email",
+    })
+    .populate({
+      path: "sitterId",
+      model: "user",
+      select: "name email",
+    })
+    .sort({ start: "asc" });
 
   res.status(200).json({
     success: {
