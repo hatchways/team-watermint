@@ -2,16 +2,17 @@ import { Grid, Stack, Typography, Paper } from '@mui/material';
 import AvatarDisplay from '../../../components/AvatarDisplay/AvatarDisplay';
 import { User } from '../../../interface/User';
 import EditBooking from './EditBooking';
+import { RequestStatus } from '../../../types/RequestStatus';
+
 interface Props {
   start: string;
   end: string;
   userId: User;
   requestId: string;
-  accepted: boolean;
-  declined: boolean;
+  status: RequestStatus;
   editable?: boolean;
   border?: boolean;
-  handleRequestApproval: (requestId: string, approval: boolean) => void;
+  handleRequest: (requestId: string, status: RequestStatus) => void;
 }
 
 export default function Booking({
@@ -19,21 +20,14 @@ export default function Booking({
   end,
   userId,
   requestId,
-  accepted,
-  declined,
+  status,
   editable = true,
   border = false,
-  handleRequestApproval,
+  handleRequest: handleRequest,
 }: Props): JSX.Element {
-  function renderApprovalStatus(approve: boolean, deny: boolean): string {
-    if (approve) {
-      return 'Accepted';
-    } else if (deny) {
-      return 'Declined';
-    } else {
-      return 'Pending';
-    }
-  }
+  // function renderRequestStatus(status: RequestStatus): string {
+  //   return status.toString();
+  // }
 
   function parseStartDate(start: Date): string {
     return start.toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short', hourCycle: 'h12' });
@@ -75,11 +69,11 @@ export default function Booking({
               fontSize: 12,
             }}
           >
-            {renderApprovalStatus(accepted, declined)}
+            {status.toString()}
           </Typography>
         </Grid>
         <Grid item xs={1} alignSelf="flex-start">
-          {editable && <EditBooking requestId={requestId} handleRequestApproval={handleRequestApproval} />}
+          {editable && <EditBooking requestId={requestId} handleRequest={handleRequest} />}
         </Grid>
       </Grid>
     </Paper>

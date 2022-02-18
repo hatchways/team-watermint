@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
-import getRequests from '../../helpers/APICalls/getIncomingRequests';
-import approveRequest from '../../helpers/APICalls/approveRequest';
+import getRequests from '../../helpers/APICalls/getRequests';
+import updateRequest from '../../helpers/APICalls/updateRequest';
 import { Request } from '../../interface/RequestApiData';
 import Booking from './Booking/Booking';
 import Calendar from './Calendar/Calendar';
 import useStyles from './useStyles';
+import { RequestStatus } from '../../types/RequestStatus';
 
 export default function Sitters(): JSX.Element {
   const classes = useStyles();
@@ -36,12 +37,12 @@ export default function Sitters(): JSX.Element {
     });
   }, []);
 
-  function handleRequestApproval(requestId: string, approve: boolean) {
-    approveRequest(requestId, approve).then(() => {
+  function handleRequest(requestId: string, status: RequestStatus) {
+    updateRequest(requestId, status).then(() => {
       setRequests(
         requests.map((request) => {
           if (request._id === requestId) {
-            return { ...request, accepted: approve, declined: !approve };
+            return { ...request, status };
           }
           return request;
         }),
@@ -58,9 +59,8 @@ export default function Sitters(): JSX.Element {
           end={requests[0].end}
           userId={requests[0].userId}
           requestId={requests[0]._id}
-          accepted={requests[0].accepted}
-          declined={requests[0].declined}
-          handleRequestApproval={handleRequestApproval}
+          status={requests[0].status}
+          handleRequest={handleRequest}
         />
       );
     }
@@ -77,10 +77,9 @@ export default function Sitters(): JSX.Element {
             end={request.end}
             userId={request.userId}
             requestId={request._id}
-            accepted={request.accepted}
-            declined={request.declined}
+            status={request.status}
             border
-            handleRequestApproval={handleRequestApproval}
+            handleRequest={handleRequest}
           />
         );
       });
@@ -97,11 +96,10 @@ export default function Sitters(): JSX.Element {
             end={request.end}
             userId={request.userId}
             requestId={request._id}
-            accepted={request.accepted}
-            declined={request.declined}
+            status={request.status}
             editable={false}
             border
-            handleRequestApproval={handleRequestApproval}
+            handleRequest={handleRequest}
           />
         );
       });

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { IconButton, Button, Popover } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { RequestStatus } from '../../../types/RequestStatus';
 
 interface Props {
   requestId: string;
-  handleRequestApproval: (requestId: string, approval: boolean) => void;
+  handleRequest: (requestId: string, status: RequestStatus) => void;
 }
 
-export default function BookingPopover({ requestId, handleRequestApproval }: Props) {
+export default function BookingPopover({ requestId, handleRequest }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,7 +39,7 @@ export default function BookingPopover({ requestId, handleRequestApproval }: Pro
       >
         <Button
           onClick={() => {
-            handleRequestApproval(requestId, true);
+            handleRequest(requestId, RequestStatus.accepted);
             handleClose();
           }}
           color="success"
@@ -50,7 +51,7 @@ export default function BookingPopover({ requestId, handleRequestApproval }: Pro
         </Button>
         <Button
           onClick={() => {
-            handleRequestApproval(requestId, false);
+            handleRequest(requestId, RequestStatus.declined);
             handleClose();
           }}
           color="warning"
