@@ -1,18 +1,19 @@
 import { RequestApiData } from '../../interface/RequestApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
+import { RequestStatus } from '../../types/RequestStatus';
 
-const approveRequest = async (requestId: string, accept: boolean): Promise<RequestApiData> => {
+const updateRequest = async (requestId: string, status: RequestStatus): Promise<RequestApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ requestId, accept }),
+    body: JSON.stringify({ status }),
     credentials: 'include',
   };
-  return await fetch(`/requests/approval`, fetchOptions)
+  return await fetch(`/requests/${requestId}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
 
-export default approveRequest;
+export default updateRequest;
