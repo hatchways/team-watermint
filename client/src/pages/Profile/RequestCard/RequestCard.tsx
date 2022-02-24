@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { Paper, Typography, Rating, Button, Stack, TextField, Card, CardContent } from '@mui/material';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 
-export default function RequestCard(): JSX.Element {
-  const hourlyRate = 14;
-  const rating = 4;
+interface props {
+  pay?: string;
+  rating?: number;
+  sitterId?: string;
+}
+
+export default function RequestCard({ pay, rating, sitterId }: props): JSX.Element {
   const [start, setStart] = useState<Date | null>(new Date());
   const [end, setEnd] = useState<Date | null>(new Date());
 
@@ -14,9 +18,9 @@ export default function RequestCard(): JSX.Element {
         <Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={5}>
           {' '}
           <Typography variant="h6" marginBottom={-4} sx={{ fontWeight: 'bold' }}>
-            ${hourlyRate}/hr
+            ${pay || 0}/hr
           </Typography>
-          <Rating name="read-only" value={rating} size={'small'} readOnly />
+          <Rating name="read-only" value={rating || 0} size={'small'} precision={0.5} readOnly />
           <DateTimePicker
             renderInput={(props) => <TextField {...props} />}
             label="Drop In"
