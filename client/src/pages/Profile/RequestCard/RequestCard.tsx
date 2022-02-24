@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Paper, Typography, Rating, Button, Stack, TextField, Card, CardContent } from '@mui/material';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import createRequest from './../../../helpers/APICalls/createRequest';
+import { LoadingButton } from '@mui/lab';
+import { useSnackBar } from './../../../context/useSnackbarContext';
 
 interface props {
   pay?: string;
@@ -10,12 +12,32 @@ interface props {
 }
 
 export default function RequestCard({ pay, rating, sitterId }: props): JSX.Element {
+  const [isSending, setSending] = useState<boolean>(false);
   const [start, setStart] = useState<Date | null>(new Date());
   const [end, setEnd] = useState<Date | null>(new Date());
+  const { updateSnackBarMessage } = useSnackBar();
 
   const handleSendRequest = () => {
     if (sitterId && start && end) {
-      createRequest(sitterId, start, end);
+      setSending(true);
+
+      if (start <= new Date()) {
+        updateSnackBarMessage('Invalid start date');
+        setSending(false);
+      } else if (start >= end) {
+        updateSnackBarMessage('Invalid end date');
+        setSending(false);
+      } else {
+        createRequest(sitterId, start, end)
+          .then((data) => {
+            if (data.error) {
+              updateSnackBarMessage('Could not send request');
+            } else {
+              updateSnackBarMessage('Request sent!');
+            }
+          })
+          .finally(() => setSending(false));
+      }
     }
   };
 
@@ -44,14 +66,15 @@ export default function RequestCard({ pay, rating, sitterId }: props): JSX.Eleme
               setEnd(newValue);
             }}
           />
-          <Button
+          <LoadingButton
             onClick={() => handleSendRequest()}
+            loading={isSending}
             variant="contained"
             disableElevation
             sx={{ width: '60%', maxWidth: 180, height: 50 }}
           >
             Send Request
-          </Button>
+          </LoadingButton>
         </Stack>
       </CardContent>
     </Card>
