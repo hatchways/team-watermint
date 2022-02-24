@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, logout } = useAuth();
+  const { loggedInUser, profile, logout } = useAuth();
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText>Settings</ListItemText>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleClose}>
+                  <DropdownMenuItem component={NavLink} to={`/profile/${profile?._id || ''}`} onClick={handleClose}>
                     <ListItemIcon>
                       <Person fontSize="small" />
                     </ListItemIcon>
