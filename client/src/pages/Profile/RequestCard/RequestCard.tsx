@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Paper, Typography, Rating, Button, Stack, TextField, Card, CardContent } from '@mui/material';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import createRequest from './../../../helpers/APICalls/createRequest';
 
 interface props {
   pay?: string;
@@ -11,6 +12,12 @@ interface props {
 export default function RequestCard({ pay, rating, sitterId }: props): JSX.Element {
   const [start, setStart] = useState<Date | null>(new Date());
   const [end, setEnd] = useState<Date | null>(new Date());
+
+  const handleSendRequest = () => {
+    if (sitterId && start && end) {
+      createRequest(sitterId, start, end);
+    }
+  };
 
   return (
     <Card sx={{ padding: 3 }}>
@@ -37,7 +44,12 @@ export default function RequestCard({ pay, rating, sitterId }: props): JSX.Eleme
               setEnd(newValue);
             }}
           />
-          <Button variant="contained" disableElevation sx={{ width: '60%', maxWidth: 180, height: 50 }}>
+          <Button
+            onClick={() => handleSendRequest()}
+            variant="contained"
+            disableElevation
+            sx={{ width: '60%', maxWidth: 180, height: 50 }}
+          >
             Send Request
           </Button>
         </Stack>
