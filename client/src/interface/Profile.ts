@@ -6,3 +6,7 @@ export interface Profile {
   description?: string;
   photo?: string;
 }
+export interface ProfileApiData {
+  error?: { message: string };
+  success?: { profile: Profile };
+}
