@@ -7,10 +7,16 @@ const {
   getAllNotifications,
   getUnreadNotifications,
 } = require("../controllers/notification");
+const {
+  validateCreateNotification,
+  validateMarkNotificationAsRead,
+} = require("../middleware/notification.validate");
 
-router.route("/").post(protect, createNotification);
+router.route("/").post(protect, validateCreateNotification, createNotification);
 
-router.route("/:notificationId").put(protect, markNotificationAsRead);
+router
+  .route("/:notificationId")
+  .put(protect, validateMarkNotificationAsRead, markNotificationAsRead);
 
 router.route("/").get(protect, getAllNotifications);
 
