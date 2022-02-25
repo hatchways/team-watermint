@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CircularProgress, Grid, Stack } from '@mui/material';
 import RequestCard from './RequestCard/RequestCard';
 import DetailsCard from './DetailsCard/DetailsCard';
+import NotFound from '../NotFound/NotFound';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import { Profile } from './../../interface/Profile';
 import getProfile from '../../helpers/APICalls/getProfile';
-import NotFound from '../NotFound/NotFound';
 
 export default function ProfileDetails(): JSX.Element {
   const { id } = useParams<{ id: string }>();

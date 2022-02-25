@@ -1,6 +1,5 @@
-import { Paper, Typography, Stack, Avatar, Grid, Card, CardMedia, CardContent } from '@mui/material';
+import { Typography, Stack, Avatar, Grid, Card, CardMedia, CardContent } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Profile } from './../../../interface/Profile';
 
 interface props {
   name?: string;
