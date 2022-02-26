@@ -1,7 +1,7 @@
 import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const editProfile = async (data: {
+export const editProfile = async (data: {
   name: string;
   email: string;
   gender: string;
@@ -23,4 +23,29 @@ const editProfile = async (data: {
     }));
 };
 
-export default editProfile;
+export const uploadProfilePhoto = async (file: File): Promise<AuthApiData> => {
+  const formData = new FormData();
+  formData.append('photo', file);
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    body: formData,
+    credentials: 'include',
+  };
+  return await fetch(`/uploads/profile-photo`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+export const deleteProfilePhoto = async (): Promise<AuthApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'DELETE',
+    credentials: 'include',
+  };
+  return await fetch(`/uploads/profile-photo`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};

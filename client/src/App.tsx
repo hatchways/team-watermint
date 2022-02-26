@@ -4,6 +4,7 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './themes/theme';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Login from './pages/Login/Login';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Signup from './pages/SignUp/SignUp';
