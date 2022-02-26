@@ -14,30 +14,34 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
 import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
+import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <SnackBarProvider>
-          <AuthProvider>
-            <SocketProvider>
-              <CssBaseline />
-              <Navbar />
-              <Switch>
-                <Route exact path="/" component={LandingPage} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route path="/profile/settings" component={Settings} />
-                <Route path="*">
-                  <NotFound />
-                </Route>
-              </Switch>
-            </SocketProvider>
-          </AuthProvider>
-        </SnackBarProvider>
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <BrowserRouter>
+          <SnackBarProvider>
+            <AuthProvider>
+              <SocketProvider>
+                <CssBaseline />
+                <Navbar />
+                <Switch>
+                  <Route exact path="/" component={LandingPage} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Route exact path="/dashboard" component={Dashboard} />
+                  <Route path="/profile/settings" component={Settings} />
+                  <Route path="*">
+                    <NotFound />
+                  </Route>
+                </Switch>
+              </SocketProvider>
+            </AuthProvider>
+          </SnackBarProvider>
+        </BrowserRouter>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }
