@@ -35,7 +35,7 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
     }
   };
 
-  const onClick = () => {
+  const deletePhoto = () => {
     deleteProfilePhoto().then((data) => {
       if (data.error) {
         updateSnackBarMessage(data.error.message);
@@ -100,7 +100,7 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ header, currentUser, curren
           variant="text"
           color="secondary"
           className={classes.specialButtons}
-          onClick={onClick}
+          onClick={deletePhoto}
           component="span"
           startIcon={<DeleteIcon />}
         >
