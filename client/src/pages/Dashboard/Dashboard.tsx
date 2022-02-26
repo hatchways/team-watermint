@@ -5,8 +5,7 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 import ProfileCard from '../../components/Cards/ProfileCard';
 import useStyles from './useStyles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { DateRange, DateRangePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { DateRange, DateRangePicker } from '@mui/lab';
 import React from 'react';
 import { searchProfiles } from '../../helpers/APICalls/searchProfiles';
 import { Profile } from '../../interface/Profile';
@@ -71,25 +70,20 @@ export default function Dashboard(): JSX.Element {
                 ),
               }}
             />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateRangePicker
-                startText="Check-in"
-                endText="Check-out"
-                value={dateRange}
-                onChange={(newDateRange) => {
-                  setDateRange(newDateRange);
-                }}
-                renderInput={(startProps, endProps) => (
-                  <React.Fragment>
-                    <TextField className={classes.boldText} {...startProps} />
-                    <TextField className={classes.boldText} {...endProps} />
-                  </React.Fragment>
-                )}
-              />
-            </LocalizationProvider>
-            <Button variant="outlined" onClick={buttonHandler}>
-              Submit
-            </Button>
+            <DateRangePicker
+              startText="Check-in"
+              endText="Check-out"
+              value={dateRange}
+              onChange={(newDateRange) => {
+                setDateRange(newDateRange);
+              }}
+              renderInput={(startProps, endProps) => (
+                <React.Fragment>
+                  <TextField className={classes.boldText} {...startProps} />
+                  <TextField className={classes.boldText} {...endProps} />
+                </React.Fragment>
+              )}
+            />
           </Box>
         </Grid>
         <Grid xs={12} item>
