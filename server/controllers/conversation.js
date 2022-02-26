@@ -7,17 +7,16 @@ const asyncHandler = require("express-async-handler");
 exports.createConversation = asyncHandler(async (req, res, next) => {
   const { dogOwnerId, dogSitterId } = req.body;
 
-  try {
-    const conversation = await Conversation.create({
-      dogOwnerId,
-      dogSitterId
-    });
-    if (conversation)
-      res.status(201).json({ success: "Successfully created conversation" });
-    else
-      res.status(400).json({ error: "Could not make a conversation" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const conversationExists = await Conversation.findOne({
+    dogOwnerId,
+    dogSitterId
+  });
+
+  if (conversationExists) {
+    res.status(400).json({ error: "Conversation already exists" });
+  } else {
+    await Conversation.create({ dogOwnerId, dogSitterId });
+    res.status(201).json({ success: "Successfully created conversation" });
   }
 });
 
@@ -31,15 +30,11 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
     $or: [{ "petSitter": userId }, { "petOwner": userId }]
   }).populate("recentMessage");
 
-  if (allConversations) {
-    res.status(200).json({
-      success: {
-        conversations: allConversations
-      }
-    });
-  } else {
-    res.status(404).json({ error: "Conversations not found" })
-  }
+  res.status(200).json({
+    success: {
+      conversations: allConversations
+    }
+  });
 });
 
 // @route GET /conversations/:conversationId/messages
@@ -48,20 +43,16 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
 exports.getMessages = asyncHandler(async (req, res, next) => {
   const conversationId = req.params.conversationId;
 
-  try {
-    const conversation = await Conversation.findById(conversationId, "_id")
-      .populate("messages");
+  const conversation = await Conversation.findById(conversationId, "_id")
+    .populate("messages");
 
-    if (conversation) {
-      res.status(200).json({
-        success: {
-          messages: conversation.messages
-        }
-      });
-    } else {
-      res.status(404).json({ error: "No conversation found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message })
+  if (conversation) {
+    res.status(200).json({
+      success: {
+        messages: conversation.messages
+      }
+    });
+  } else {
+    res.status(404).json({ error: "No conversation found" });
   }
 });

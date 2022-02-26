@@ -10,25 +10,23 @@ exports.createMessage = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const message = req.body.message;
 
-  try {
+  const conversationExists = await Conversation.findById(conversationId, "_id");
+
+  if (conversationExists) {
     const newMessage = await Message.create({
       conversationId,
       userId,
       message
     });
-
-    const updatedConversation = await Conversation.findOneAndUpdate(
+    await Conversation.findOneAndUpdate(
       { "_id": conversationId },
       {
         $push: { messages: newMessage._id },
         $set: { recentMessage: newMessage._id }
       }, { new: true });
-    if (updatedConversation) {
-      res.status(201).json({ success: "Successfully created message" });
-    } else {
-      res.status(404).json({ error: "Conversation not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(201).json({ success: "Successfully created message" });
+  } else {
+    res.status(404).json({ error: "Conversation not found" });
+
   }
 });
