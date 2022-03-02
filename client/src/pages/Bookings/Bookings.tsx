@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
 import getRequests from '../../helpers/APICalls/getRequests';
 import updateRequest from '../../helpers/APICalls/updateRequest';
+import { useSnackBar } from '../../context/useSnackbarContext';
 import { Request } from '../../interface/RequestApiData';
 import Booking from './Booking/Booking';
 import Calendar from './Calendar/Calendar';
@@ -10,6 +11,7 @@ import { RequestStatus } from '../../types/RequestStatus';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
   const [requests, setRequests] = useState<Request[]>([]);
   const [pastRequests, setPastRequests] = useState<Request[]>([]);
 
@@ -38,15 +40,19 @@ export default function Bookings(): JSX.Element {
   }, []);
 
   function handleRequest(requestId: string, status: RequestStatus) {
-    updateRequest(requestId, status).then(() => {
-      setRequests(
-        requests.map((request) => {
-          if (request._id === requestId) {
-            return { ...request, status };
-          }
-          return request;
-        }),
-      );
+    updateRequest(requestId, status).then((data) => {
+      if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      } else {
+        setRequests(
+          requests.map((request) => {
+            if (request._id === requestId) {
+              return { ...request, status };
+            }
+            return request;
+          }),
+        );
+      }
     });
   }
 
