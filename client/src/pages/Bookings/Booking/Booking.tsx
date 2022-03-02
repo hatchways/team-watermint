@@ -25,10 +25,6 @@ export default function Booking({
   border = false,
   handleRequest: handleRequest,
 }: Props): JSX.Element {
-  // function renderRequestStatus(status: RequestStatus): string {
-  //   return status.toString();
-  // }
-
   function parseStartDate(start: Date): string {
     return start.toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short', hourCycle: 'h12' });
   }
