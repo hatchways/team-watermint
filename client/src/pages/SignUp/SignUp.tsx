@@ -13,15 +13,16 @@ export default function Register(): JSX.Element {
   const { updateSnackBarMessage } = useSnackBar();
 
   const handleSubmit = (
-    { name, email, password }: { email: string; password: string; name: string },
-    { setSubmitting }: FormikHelpers<{ email: string; password: string; name: string }>,
+    { name, email, password, accountType }: { email: string; password: string; name: string; accountType: string },
+    { setSubmitting }: FormikHelpers<{ email: string; password: string; name: string; accountType: string }>,
   ) => {
-    register(name, email, password).then((data) => {
+    register(name, email, password, accountType).then((data) => {
       if (data.error) {
         console.error({ error: data.error.message });
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
+        window.location.reload();
         updateLoginContext(data.success);
       } else {
         // should not get here from backend but this catch is for an unknown issue

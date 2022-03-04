@@ -5,6 +5,7 @@ import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import useStyles from './useStyles';
 import FormInput from '../../../components/FormInput/FormInput';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   handleSubmit: (
@@ -12,10 +13,12 @@ interface Props {
       name,
       email,
       password,
+      accountType,
     }: {
       email: string;
       password: string;
       name: string;
+      accountType: string;
     },
     {
       setStatus,
@@ -24,6 +27,7 @@ interface Props {
       email: string;
       password: string;
       name: string;
+      accountType: string;
     }>,
   ) => void;
 }
@@ -31,12 +35,17 @@ interface Props {
 const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
   const classes = useStyles();
 
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const accountType = query.get('accountType');
+
   return (
     <Formik
       initialValues={{
         email: '',
         password: '',
         name: '',
+        accountType: accountType ? accountType : 'pet_owner',
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required('Name is required').max(40, 'Name is too long'),
