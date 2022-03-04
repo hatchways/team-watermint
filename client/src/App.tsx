@@ -13,6 +13,7 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { Navbar } from './components/Navbar/Navbar';
+import Bookings from './pages/Bookings/Bookings';
 import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
 import { LocalizationProvider } from '@mui/lab';
@@ -21,8 +22,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <SnackBarProvider>
             <AuthProvider>
               <SocketProvider>
@@ -33,6 +34,7 @@ function App(): JSX.Element {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/signup" component={Signup} />
                   <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                  <ProtectedRoute path="/my-jobs" component={Bookings} />
                   <ProtectedRoute path="/profile/settings" component={Settings} />
                   <Route path="*">
                     <NotFound />
@@ -41,8 +43,8 @@ function App(): JSX.Element {
               </SocketProvider>
             </AuthProvider>
           </SnackBarProvider>
-        </BrowserRouter>
-      </LocalizationProvider>
+        </LocalizationProvider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
