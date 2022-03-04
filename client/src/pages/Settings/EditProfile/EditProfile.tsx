@@ -9,7 +9,7 @@ import { Profile } from '../../../interface/Profile';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { makeStyles } from '@mui/styles';
-import editProfile from '../../../helpers/APICalls/editProfile';
+import { editProfile } from '../../../helpers/APICalls/editProfile';
 import { useSnackBar } from '../../../context/useSnackbarContext';
 
 const useStyles = makeStyles({

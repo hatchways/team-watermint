@@ -4,8 +4,7 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './themes/theme';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Login from './pages/Login/Login';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Signup from './pages/SignUp/SignUp';
@@ -17,6 +16,8 @@ import { Navbar } from './components/Navbar/Navbar';
 import Bookings from './pages/Bookings/Bookings';
 import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
+import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 function App(): JSX.Element {
   return (
@@ -32,9 +33,9 @@ function App(): JSX.Element {
                   <Route exact path="/" component={LandingPage} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/dashboard" component={Dashboard} />
-                  <Route path="/my-jobs" component={Bookings} />
-                  <Route path="/profile/settings" component={Settings} />
+                  <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+                  <ProtectedRoute path="/my-jobs" component={Bookings} />
+                  <ProtectedRoute path="/profile/settings" component={Settings} />
                   <Route path="*">
                     <NotFound />
                   </Route>

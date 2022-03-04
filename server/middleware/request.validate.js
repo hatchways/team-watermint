@@ -8,7 +8,6 @@ exports.validateCreateRequest = [
     .isAfter()
     .bail()
     .custom((end, { req }) => {
-      console.log(req.body.start);
       if (req.body.start.getTime() >= end.getTime())
         throw new Error("End date must be after start date");
       return end;
@@ -16,7 +15,7 @@ exports.validateCreateRequest = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ error: errors.array() });
     next();
   },
 ];
@@ -30,7 +29,7 @@ exports.validateHandleRequest = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ error: errors.array() });
     next();
   },
 ];
