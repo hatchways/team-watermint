@@ -84,6 +84,9 @@ export default function Dashboard(): JSX.Element {
                 </React.Fragment>
               )}
             />
+            <Button variant="outlined" onClick={buttonHandler}>
+              Submit
+            </Button>
           </Box>
         </Grid>
         <Grid xs={12} item>
