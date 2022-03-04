@@ -43,29 +43,28 @@ exports.loadProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.searchProfiles = asyncHandler(async (req, res, next) => {
 
-  if (req.query.location) {
+  if (req.query.location || req.query.location === '') {
+    const locationQueryParams = {};
 
-    const profiles = await Profile.find({ accountType: 'pet_sitter', address: { $regex: req.query.location, $options: "i" }, pay: { $ne: null } });
+    if (req.query.location !== '') {
+      locationQueryParams['$regex'] = req.query.location;
+      locationQueryParams['$options'] = "i";
+    } else {
+      locationQueryParams['$ne'] = null | '';
+    }
 
-    res.status(200).json({
-      profiles: profiles
-    });
-
-  } else if (req.query.location === '') {
-
-    const profiles = await Profile.find({ accountType: 'pet_sitter', address: { $ne: null | '' }, pay: { $ne: null } });
-
+    const profiles = await Profile.find({ accountType: 'pet_sitter', address: locationQueryParams, pay: { $ne: null } });    
+  
     res.status(200).json({
       profiles: profiles
     });
 
   } else {
-
+    
     res.status(400).json({
       error: {
         message: "Bad Request"
       }
     });
-
   }
 });
