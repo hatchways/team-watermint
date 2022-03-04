@@ -57,7 +57,7 @@ export default function Sitters(): JSX.Element {
           key={requests[0]._id}
           start={requests[0].start}
           end={requests[0].end}
-          userId={requests[0].userId}
+          user={requests[0].user}
           requestId={requests[0]._id}
           status={requests[0].status}
           handleRequest={handleRequest}
@@ -75,7 +75,7 @@ export default function Sitters(): JSX.Element {
             key={request._id}
             start={request.start}
             end={request.end}
-            userId={request.userId}
+            user={request.user}
             requestId={request._id}
             status={request.status}
             border
@@ -94,7 +94,7 @@ export default function Sitters(): JSX.Element {
             key={request._id}
             start={request.start}
             end={request.end}
-            userId={request.userId}
+            user={request.user}
             requestId={request._id}
             status={request.status}
             editable={false}

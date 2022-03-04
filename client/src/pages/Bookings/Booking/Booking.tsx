@@ -7,7 +7,7 @@ import { RequestStatus } from '../../../types/RequestStatus';
 interface Props {
   start: string;
   end: string;
-  userId: User;
+  user: User;
   requestId: string;
   status: RequestStatus;
   editable?: boolean;
@@ -18,7 +18,7 @@ interface Props {
 export default function Booking({
   start,
   end,
-  userId,
+  user,
   requestId,
   status,
   editable = true,
@@ -55,8 +55,8 @@ export default function Booking({
             {parseStartDate(new Date(start)) + ' - ' + parseEndDate(new Date(start), new Date(end))}
           </Typography>
           <Stack spacing={2} marginTop={1} direction="row" justifyContent="flex-start" alignItems="center">
-            <AvatarDisplay loggedIn={true} user={userId} />
-            <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>{userId.name}</Typography>
+            <AvatarDisplay loggedIn={true} user={user} />
+            <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>{user.name}</Typography>
           </Stack>
         </Grid>
         <Grid item xs={2}>

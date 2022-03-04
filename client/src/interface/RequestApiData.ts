@@ -2,8 +2,8 @@ import { User } from './User';
 import { RequestStatus } from '../types/RequestStatus';
 export interface Request {
   _id: string;
-  userId: User;
-  sitterId: User;
+  user: User;
+  sitter: User;
   start: string;
   end: string;
   status: RequestStatus;

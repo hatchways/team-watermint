@@ -5,14 +5,14 @@ const asyncHandler = require("express-async-handler");
 // @desc load requests for logged in sitter
 // @access Private
 exports.loadRequests = asyncHandler(async (req, res, next) => {
-  const requests = await Request.find({ sitterId: req.user.id })
+  const requests = await Request.find({ sitter: req.user.id })
     .populate({
-      path: "userId",
+      path: "user",
       model: "user",
       select: "name email",
     })
     .populate({
-      path: "sitterId",
+      path: "sitter",
       model: "user",
       select: "name email",
     })
@@ -44,8 +44,8 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   }
 
   const request = await Request.create({
-    userId,
-    sitterId,
+    user: userId,
+    sitter: sitterId,
     start: new Date(start),
     end: new Date(end),
   });
@@ -74,7 +74,7 @@ exports.handleRequest = asyncHandler(async (req, res, next) => {
     throw new Error("Request not found");
   }
 
-  if (request.sitterId.toString() !== req.user.id) {
+  if (request.sitter.toString() !== req.user.id) {
     res.status(403);
     throw new Error("Permission denied");
   }
