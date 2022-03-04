@@ -47,12 +47,12 @@ export default function Booking({
         spacing={3}
       >
         <Grid item xs={9}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>
+          <Typography variant="bookingBody">
             {parseStartDate(new Date(start)) + ' - ' + parseEndDate(new Date(start), new Date(end))}
           </Typography>
           <Stack spacing={2} marginTop={1} direction="row" justifyContent="flex-start" alignItems="center">
             <AvatarDisplay loggedIn={true} user={user} />
-            <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}>{user.name}</Typography>
+            <Typography variant="bookingBody">{user.name}</Typography>
           </Stack>
         </Grid>
         <Grid item xs={2}>

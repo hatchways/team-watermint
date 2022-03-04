@@ -112,9 +112,7 @@ export default function Bookings(): JSX.Element {
         <Grid container direction="column" spacing={3}>
           <Grid item>
             <Paper elevation={3} sx={{ paddingX: 4, paddingY: 4, minWidth: 450 }}>
-              <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase' }}>
-                Your next booking:
-              </Typography>
+              <Typography variant="bookingHeader">Your next booking:</Typography>
               {renderFirstBooking()}
             </Paper>
           </Grid>
@@ -124,11 +122,9 @@ export default function Bookings(): JSX.Element {
               elevation={3}
               sx={{ paddingX: 4, paddingY: 4, maxHeight: 400, overflow: 'auto' }}
             >
-              <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase' }}>
-                Current bookings:
-              </Typography>
+              <Typography variant="bookingHeader">Current bookings:</Typography>
               {renderOtherBookings()}
-              <Typography sx={{ fontWeight: 'bold', fontSize: 13, textTransform: 'uppercase', marginTop: 3 }}>
+              <Typography variant="bookingHeader" sx={{ marginTop: 3 }}>
                 Past bookings:
               </Typography>
               {renderPastBookings()}
