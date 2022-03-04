@@ -18,6 +18,7 @@ import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import Profile from './pages/Profile/Profile';
 
 function App(): JSX.Element {
   return (
@@ -36,6 +37,7 @@ function App(): JSX.Element {
                   <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                   <ProtectedRoute path="/my-jobs" component={Bookings} />
                   <ProtectedRoute path="/profile/settings" component={Settings} />
+                  <ProtectedRoute exact path="/profile/:id" component={Profile} />
                   <Route path="*">
                     <NotFound />
                   </Route>
