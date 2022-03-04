@@ -1,4 +1,4 @@
-import { Paper, Typography, Stack, Avatar, Grid } from '@mui/material';
+import { Paper, Typography, Stack, Avatar, Grid, Card, CardMedia, CardContent } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 interface detailsCardData {
@@ -28,54 +28,57 @@ export default function DetailsCard(): JSX.Element {
   };
 
   return (
-    <Paper elevation={3}>
-      <Stack direction="column" justifyContent="center" alignItems="center">
-        <img
-          src={card.coverImg}
-          alt="Cover photo"
-          width="100%"
-          height="300"
-          style={{ objectFit: 'cover', marginBottom: -100, borderRadius: '4px' }}
-        />
-        <Avatar
-          alt="Avatar photo"
-          src={card.avatarImg}
-          sx={{ height: 200, width: 200, border: '7px solid white', boxShadow: '2px 3px 20px 2px rgb(0 0 0 / 10%)' }}
-        />
-        <Typography variant="h4" marginTop={2} fontWeight="bold">
-          {card.name}
-        </Typography>
-        <Typography variant="subtitle1" color="text.disabled" fontWeight="bold">
-          {card.subtitle}
-        </Typography>
-        <Stack direction="row" spacing={1} marginTop={3}>
-          <LocationOnIcon color="primary"></LocationOnIcon>
-          <Typography variant="subtitle1" color="text.disabled" fontWeight="bold">
-            {card.location}
+    <Card>
+      <CardMedia
+        component="img"
+        src={card.coverImg}
+        alt="Cover photo"
+        width="100%"
+        height="300"
+        style={{ marginBottom: -120 }}
+      />
+      <CardContent>
+        <Stack direction="column" justifyContent="center" alignItems="center">
+          <Avatar
+            alt="Avatar photo"
+            src={card.avatarImg}
+            sx={{ height: 200, width: 200, border: '7px solid white', boxShadow: '2px 3px 20px 2px rgb(0 0 0 / 10%)' }}
+          />
+          <Typography variant="h4" marginTop={2} fontWeight="bold">
+            {card.name}
           </Typography>
+          <Typography variant="subtitle1" color="text.disabled" fontWeight="bold">
+            {card.subtitle}
+          </Typography>
+          <Stack direction="row" spacing={1} marginTop={3}>
+            <LocationOnIcon color="primary"></LocationOnIcon>
+            <Typography variant="subtitle1" color="text.disabled" fontWeight="bold">
+              {card.location}
+            </Typography>
+          </Stack>
+          <Typography variant="h5" fontWeight="bold" marginTop={4} paddingX={4} alignSelf="start">
+            About Me
+          </Typography>
+          <Typography variant="body1" marginTop={2} paddingX={4}>
+            {card.description}
+          </Typography>
+          <Grid container spacing={2} sx={{ paddingX: 4, marginTop: 4, marginBottom: 4 }}>
+            {card.images.map((item) => {
+              return (
+                <Grid item xs={4} sm={3} md={3} lg={2.4} xl={2} key={item.toString()}>
+                  <img
+                    src={item}
+                    alt="Dog photos"
+                    width={'100%'}
+                    height={'120'}
+                    style={{ objectFit: 'cover', borderRadius: '4px' }}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
         </Stack>
-        <Typography variant="h5" fontWeight="bold" marginTop={4} paddingLeft={7} alignSelf="start">
-          About Me
-        </Typography>
-        <Typography variant="body1" marginTop={2} paddingX={7}>
-          {card.description}
-        </Typography>
-        <Grid container spacing={2} sx={{ paddingX: 7, marginTop: 4, marginBottom: 8 }}>
-          {card.images.map((item) => {
-            return (
-              <Grid item xs={4} sm={3} md={3} lg={2.4} xl={2} key={item.toString()}>
-                <img
-                  src={item}
-                  alt="Dog photos"
-                  width={'100%'}
-                  height={'120'}
-                  style={{ objectFit: 'cover', borderRadius: '4px' }}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Stack>
-    </Paper>
+      </CardContent>
+    </Card>
   );
 }
