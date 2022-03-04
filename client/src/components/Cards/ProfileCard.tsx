@@ -39,19 +39,19 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyItems: 'center' }}>
-          <Avatar alt="Profile Photo" src={profile?.photo} className={classes.avatar} />
+          <Avatar alt="Profile Photo" src={profile.photo} className={classes.avatar} />
           <Typography variant="h5" component="h2" fontWeight="500" textAlign="center">
-            {profile?.name}
+            {profile.name}
           </Typography>
           <Typography gutterBottom variant="subtitle2" color="textSecondary" fontWeight={500} textAlign="center">
-            {profile?.headline}
+            {profile.headline}
           </Typography>
           <Box sx={{ margin: '0.25rem auto' }}>
-            <Rating value={profile?.rating} precision={0.5} size="small" readOnly />
+            <Rating value={profile.rating} precision={0.5} size="small" readOnly />
           </Box>
           <Box sx={{ width: '70%', margin: '0 auto 0.5rem' }}>
             <Typography gutterBottom textAlign="center" variant="body2" fontWeight={500} component="p">
-              {profile?.description}
+              {profile.description}
             </Typography>
           </Box>
         </CardContent>
@@ -59,11 +59,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
           <Box className={classes.address}>
             <LocationOnIcon color="primary" />
             <Typography variant="subtitle2" color="textSecondary" fontWeight={400}>
-              {profile?.address}
+              {profile.address}
             </Typography>
           </Box>
           <Typography variant="body2" fontWeight={600}>
-            ${profile?.pay}/hr
+            ${profile.pay}/hr
           </Typography>
         </Box>
       </CardActionArea>
