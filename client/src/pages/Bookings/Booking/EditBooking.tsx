@@ -19,6 +19,16 @@ export default function BookingPopover({ requestId, handleRequest }: Props) {
     setAnchorEl(null);
   };
 
+  const handleConfirmRequest = () => {
+    handleRequest(requestId, RequestStatus.accepted);
+    handleClose();
+  };
+
+  const handleDenyRequest = () => {
+    handleRequest(requestId, RequestStatus.declined);
+    handleClose();
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -37,28 +47,10 @@ export default function BookingPopover({ requestId, handleRequest }: Props) {
           horizontal: 'left',
         }}
       >
-        <Button
-          onClick={() => {
-            handleRequest(requestId, RequestStatus.accepted);
-            handleClose();
-          }}
-          color="success"
-          size="small"
-          fullWidth
-          sx={{ p: 1 }}
-        >
+        <Button onClick={handleConfirmRequest} color="success" size="small" fullWidth sx={{ p: 1 }}>
           Accept Booking
         </Button>
-        <Button
-          onClick={() => {
-            handleRequest(requestId, RequestStatus.declined);
-            handleClose();
-          }}
-          color="warning"
-          size="small"
-          fullWidth
-          sx={{ p: 1 }}
-        >
+        <Button onClick={handleDenyRequest} color="warning" size="small" fullWidth sx={{ p: 1 }}>
           Decline Booking
         </Button>
       </Popover>
