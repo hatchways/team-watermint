@@ -8,7 +8,7 @@ interface Props {
 
 export default function Calendar({ requests }: Props): JSX.Element {
   const initialDate = new Date();
-  const highlightedDays = requests.map((x) => new Date(x.start).toDateString());
+  const highlightedDays = requests.map((request) => new Date(request.start).toDateString());
 
   return (
     <StaticDatePicker

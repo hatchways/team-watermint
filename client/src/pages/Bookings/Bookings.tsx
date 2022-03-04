@@ -8,7 +8,7 @@ import Calendar from './Calendar/Calendar';
 import useStyles from './useStyles';
 import { RequestStatus } from '../../types/RequestStatus';
 
-export default function Sitters(): JSX.Element {
+export default function Bookings(): JSX.Element {
   const classes = useStyles();
   const [requests, setRequests] = useState<Request[]>([]);
   const [pastRequests, setPastRequests] = useState<Request[]>([]);
