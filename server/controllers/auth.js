@@ -32,7 +32,8 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   if (user) {
     await Profile.create({
       userId: user._id,
-      name
+      name,
+
     });
 
     const token = generateToken(user._id);
@@ -109,7 +110,17 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         name: user.name,
         email: user.email
       },
-      profile
+      profile: {
+        id: profile._id,
+        name: profile.name,
+        accountType: profile.accountType,
+        description: profile.description,
+        gender: profile.gender,
+        address: profile.address,
+        telephone: profile.telephone,
+        birthday: profile.birthday,
+        photo: profile.photo,
+      }
     }
   });
 });
