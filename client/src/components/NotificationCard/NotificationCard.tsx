@@ -1,9 +1,5 @@
-import { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import { User } from '../../interface/User';
-import { Notification, NotificationType } from '../../interface/Notification';
-import { Menu, MenuItem, Button, Card, CardHeader, CardContent, CardActionArea, Typography, Box } from '@mui/material';
-import { getAll, getUnread, markAsRead, create } from '../../helpers/APICalls/notification';
+import { Notification } from '../../interface/Notification';
+import { Card, CardContent, Typography, Box, Avatar } from '@mui/material';
 
 interface props {
   notification: Notification;

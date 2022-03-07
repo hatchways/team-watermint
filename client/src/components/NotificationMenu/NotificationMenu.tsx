@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import { User } from '../../interface/User';
 import { getAll, getUnread, markAsRead, create } from '../../helpers/APICalls/notification';
-import { Menu, MenuItem, Button, Grid, ButtonBase, Badge, Typography, MenuList } from '@mui/material';
+import { Menu, MenuItem, ButtonBase, Badge, Typography } from '@mui/material';
 import NotificationCard from '../NotificationCard/NotificationCard';
 import { useStyles } from '../Navbar/useStyles';
 import { Notification } from '../../interface/Notification';
