@@ -26,7 +26,7 @@ const NavbarButton = styled(Button)({
 const menuItems = [
   {
     item: 'Become a Sitter',
-    resource: '/dashboard',
+    resource: '/signup?accountType=pet_sitter',
     canView: [AccountType.PET_OWNER],
     authenticated: true,
   },
