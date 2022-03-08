@@ -44,7 +44,7 @@ export default function Register(): JSX.Element {
 
   return (
     <PageContainer>
-      <AuthPageWrapper header="Sign up">
+      <AuthPageWrapper header={query.get('accountType') === 'pet_sitter' ? 'Become a sitter' : 'Sign up'}>
         <SignUpForm handleSubmit={handleSubmit} />
         <GuestLogin />
         <AuthPageFooter text="Already a member?" anchorText="Login" anchorTo="/login" />
