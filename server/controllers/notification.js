@@ -5,8 +5,7 @@ const asyncHandler = require("express-async-handler");
 // @desc Create a notification
 // @access Private
 exports.createNotification = asyncHandler(async (req, res, next) => {
-  const { title, description, type, link } = req.body;
-  const userId = req.user.id;
+  const { userId, title, description, type, link } = req.body;
 
   const notification = await Notification.create({
     user: userId,

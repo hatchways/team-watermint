@@ -11,9 +11,22 @@ const {
   validateHandleRequest,
 } = require("../middleware/request.validate");
 
+const { createNotification } = require("../controllers/notification");
+const {
+  validateCreateNotification,
+} = require("../middleware/notification.validate");
+
 router.route("/").get(protect, loadRequests);
 
-router.route("/").post(protect, validateCreateRequest, createRequest);
+router
+  .route("/")
+  .post(
+    protect,
+    validateCreateRequest,
+    createRequest,
+    validateCreateNotification,
+    createNotification
+  );
 
 router.route("/:requestId").put(protect, validateHandleRequest, handleRequest);
 
