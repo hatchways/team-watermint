@@ -4,14 +4,18 @@ const profileSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'User',
+    ref: "User",
   },
   accountType: {
     type: String,
     default: "pet_owner",
-    enum: ['pet_owner', 'pet_sitter'],
+    enum: ["pet_owner", "pet_sitter"],
   },
   name: {
+    type: String,
+    default: "",
+  },
+  caption: {
     type: String,
     default: "",
   },
@@ -21,7 +25,7 @@ const profileSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['male', 'female', 'other'],
+    enum: ["male", "female", "other"],
   },
   address: {
     type: String,
@@ -33,11 +37,19 @@ const profileSchema = new mongoose.Schema({
   },
   birthday: {
     type: Date,
-    default: null
+    default: null,
   },
   photo: {
     type: String,
     default: "",
+  },
+  pay: {
+    type: String,
+    default: "",
+  },
+  rating: {
+    type: Number,
+    default: 0,
   },
 });
 
