@@ -1,23 +1,18 @@
-import { AuthApiData } from '../../interface/AuthApiData';
+import { RequestApiData } from '../../interface/RequestApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const register = async (
-  name: string,
-  email: string,
-  password: string,
-  accountType: string | null,
-): Promise<AuthApiData> => {
+const createRequest = async (sitterId: string, start: Date, end: Date): Promise<RequestApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, password, accountType }),
+    body: JSON.stringify({ sitterId, start, end }),
     credentials: 'include',
   };
-  return await fetch(`/auth/register`, fetchOptions)
+  return await fetch(`/requests`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
 
-export default register;
+export default createRequest;

@@ -11,12 +11,14 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  Avatar,
 } from '@mui/material';
 import { AccountType } from '../../types/AccountType';
 import lovingSitterLogo from '../../images/logo.svg';
 import { useStyles } from './useStyles';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Settings, Logout, Person } from '@mui/icons-material';
+import NotificationMenu from '../NotificationMenu/NotificationMenu';
 
 const NavbarButton = styled(Button)({
   padding: '15px 0',
@@ -25,7 +27,7 @@ const NavbarButton = styled(Button)({
 const menuItems = [
   {
     item: 'Become a Sitter',
-    resource: '/dashboard',
+    resource: '/signup?accountType=pet_sitter',
     canView: [AccountType.PET_OWNER],
     authenticated: true,
   },
@@ -94,7 +96,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loggedInUser, logout } = useAuth();
+  const { loggedInUser, profile, logout } = useAuth();
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -111,10 +113,13 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        if (profile) {
+          return (
+            loggedInUser && menu.canView?.includes(profile.accountType) && <MenuItem key={menu.resource} {...menu} />
+          );
+        }
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
@@ -125,14 +130,19 @@ const Navbar: React.FC = () => {
     <Grid
       className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
       justifyContent="space-between"
-      alignItems="top"
+      alignItems="center"
       container
     >
       <Grid xs={4} md={6} item>
         <img className={classes.navbarLogo} src={lovingSitterLogo} />
       </Grid>
       <Grid xs={8} md={6} item>
-        <Grid container alignItems="center" gap={2} justifyContent="flex-end">
+        <Grid container alignItems="center" gap={2} justifyContent="flex-end" wrap="nowrap">
+          {loggedInUser && (
+            <Grid xs={2} item>
+              <NotificationMenu />
+            </Grid>
+          )}
           {renderMenuItems()}
           {loggedInUser && (
             <Grid xs={2} item>
@@ -145,7 +155,7 @@ const Navbar: React.FC = () => {
                   onClick={handleMenuOpen}
                   color="inherit"
                 >
-                  <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                  <Avatar alt="Avatar photo" src={profile?.photo} sx={{ height: 40, width: 40 }} />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
@@ -168,7 +178,7 @@ const Navbar: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText>Settings</ListItemText>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleClose}>
+                  <DropdownMenuItem component={NavLink} to={`/profile/${profile?._id || ''}`} onClick={handleClose}>
                     <ListItemIcon>
                       <Person fontSize="small" />
                     </ListItemIcon>

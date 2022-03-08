@@ -1,16 +1,19 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const protect = require('../middleware/auth');
+const protect = require("../middleware/auth");
 const {
   editProfile,
   loadProfile,
-  searchProfiles
-} = require('../controllers/profile');
+  searchProfiles,
+  loadProfileById,
+} = require("../controllers/profile");
 
-router.route('/edit').put(protect, editProfile);
+router.route("/edit").put(protect, editProfile);
 
-router.route('/load').get(protect, loadProfile);
+router.route("/load").get(protect, loadProfile);
 
-router.route('/search').get(searchProfiles);
+router.route("/search").get(searchProfiles);
+
+router.route("/:id").get(protect, loadProfileById);
 
 module.exports = router;

@@ -16,17 +16,18 @@ exports.createMessage = asyncHandler(async (req, res, next) => {
     const newMessage = await Message.create({
       conversationId,
       userId,
-      message
+      message,
     });
     await Conversation.findOneAndUpdate(
-      { "_id": conversationId },
+      { _id: conversationId },
       {
         $push: { messages: newMessage._id },
-        $set: { recentMessage: newMessage._id }
-      }, { new: true });
+        $set: { recentMessage: newMessage._id },
+      },
+      { new: true }
+    );
     res.status(201).json({ success: "Successfully created message" });
   } else {
     res.status(404).json({ error: "Conversation not found" });
-
   }
 });

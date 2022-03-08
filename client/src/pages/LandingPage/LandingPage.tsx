@@ -1,6 +1,7 @@
 import useStyles from './useStyles';
 import { Box, Grid, Typography, Button } from '@mui/material';
 import FormInput from '../../components/FormInput/FormInput';
+import { NavLink } from 'react-router-dom';
 
 export default function LandingPage(): JSX.Element {
   const classes = useStyles();
@@ -42,6 +43,8 @@ export default function LandingPage(): JSX.Element {
                 color="primary"
                 className={classes.formButton}
                 disableElevation
+                component={NavLink}
+                to="/dashboard"
               >
                 Find my dog sitter
               </Button>

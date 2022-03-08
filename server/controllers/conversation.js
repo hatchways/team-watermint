@@ -9,7 +9,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
 
   const conversationExists = await Conversation.findOne({
     dogOwnerId,
-    dogSitterId
+    dogSitterId,
   });
 
   if (conversationExists) {
@@ -27,13 +27,13 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
   const allConversations = await Conversation.find({
-    $or: [{ "petSitter": userId }, { "petOwner": userId }]
+    $or: [{ petSitter: userId }, { petOwner: userId }],
   }).populate("recentMessage");
 
   res.status(200).json({
     success: {
-      conversations: allConversations
-    }
+      conversations: allConversations,
+    },
   });
 });
 
@@ -43,14 +43,16 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
 exports.getMessages = asyncHandler(async (req, res, next) => {
   const conversationId = req.params.conversationId;
 
-  const conversation = await Conversation.findById(conversationId, "_id")
-    .populate("messages");
+  const conversation = await Conversation.findById(
+    conversationId,
+    "_id"
+  ).populate("messages");
 
   if (conversation) {
     res.status(200).json({
       success: {
-        messages: conversation.messages
-      }
+        messages: conversation.messages,
+      },
     });
   } else {
     res.status(404).json({ error: "No conversation found" });
