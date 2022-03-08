@@ -89,10 +89,18 @@ exports.handleRequest = asyncHandler(async (req, res, next) => {
   request.status = status;
   const saved = await request.save();
 
-  if (saved) {
-    res.status(200).json({
+  const notification = await Notification.create({
+    user: request.user,
+    title: `Your booking request has been ${status} `,
+    description: "Dog Sitting",
+    type: "Booking",
+    link: "/dashboard",
+  });
+
+  if (notification) {
+    res.status(201).json({
       success: {
-        request,
+        saved,
       },
     });
   }

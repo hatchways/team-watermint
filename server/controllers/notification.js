@@ -59,7 +59,7 @@ exports.markNotificationAsRead = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getAllNotifications = asyncHandler(async (req, res, next) => {
   const notifications = await Notification.find({
-    userId: req.user.id,
+    user: req.user.id,
   })
     .populate({
       path: "user",
@@ -88,7 +88,7 @@ exports.getAllNotifications = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   const notifications = await Notification.find({
-    userId: req.user.id,
+    user: req.user.id,
     status: "unread",
   })
     .populate({
