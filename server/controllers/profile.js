@@ -1,5 +1,3 @@
-
-   
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 
@@ -36,6 +34,57 @@ exports.loadProfile = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: {
       profile: profile,
+    },
+  });
+});
+
+// @route GET /profile
+// @desc Get list of pet sitter profiles by location or get all
+// @access Public
+exports.searchProfiles = asyncHandler(async (req, res, next) => {
+  if (req.query.location) {
+    const profiles = await Profile.find({
+      accountType: "pet_sitter",
+      address: { $regex: req.query.location, $options: "i" },
+      pay: { $ne: null },
+    });
+
+    res.status(200).json({
+      profiles: profiles,
+    });
+  } else if (req.query.location === "") {
+    const profiles = await Profile.find({
+      accountType: "pet_sitter",
+      address: { $ne: null | "" },
+      pay: { $ne: null },
+    });
+
+    res.status(200).json({
+      profiles: profiles,
+    });
+  } else {
+    res.status(400).json({
+      error: {
+        message: "Bad Request",
+      },
+    });
+  }
+});
+
+// @route GET /profile/:id
+// @desc Get user profile data
+// @access Private
+exports.loadProfileById = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ _id: req.params.id });
+
+  if (!profile) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
+
+  res.status(200).json({
+    success: {
+      profile,
     },
   });
 });
