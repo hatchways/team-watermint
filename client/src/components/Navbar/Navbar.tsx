@@ -113,10 +113,13 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        if (profile) {
+          return (
+            loggedInUser && menu.canView?.includes(profile.accountType) && <MenuItem key={menu.resource} {...menu} />
+          );
+        }
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }

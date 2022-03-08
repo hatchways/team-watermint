@@ -1,3 +1,5 @@
+import { AccountType } from '../types/AccountType';
+
 export interface Profile {
   gender?: string;
   birthday?: Date;
@@ -11,6 +13,7 @@ export interface Profile {
   name: string;
   _id: string;
   userId: string;
+  accountType: AccountType;
 }
 
 export interface SearchProfilesApiData {
