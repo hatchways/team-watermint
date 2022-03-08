@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography, Paper } from '@mui/material';
+import { Grid, Stack, Typography, Paper, Avatar } from '@mui/material';
 import AvatarDisplay from '../../../components/AvatarDisplay/AvatarDisplay';
 import { User } from '../../../interface/User';
 import EditBooking from './EditBooking';
@@ -51,7 +51,7 @@ export default function Booking({
             {parseStartDate(new Date(start)) + ' - ' + parseEndDate(new Date(start), new Date(end))}
           </Typography>
           <Stack spacing={2} marginTop={1} direction="row" justifyContent="flex-start" alignItems="center">
-            <AvatarDisplay loggedIn={true} user={user} />
+            <Avatar alt="Avatar photo" src={''} sx={{ height: 40, width: 40 }} />
             <Typography variant="bookingBody">{user.name}</Typography>
           </Stack>
         </Grid>

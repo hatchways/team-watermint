@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, Typography, Paper } from '@mui/material';
+import { Grid, Typography, Paper, Stack } from '@mui/material';
 import getRequests from '../../helpers/APICalls/getRequests';
 import updateRequest from '../../helpers/APICalls/updateRequest';
 import { useSnackBar } from '../../context/useSnackbarContext';
@@ -128,12 +128,14 @@ export default function Bookings(): JSX.Element {
               elevation={3}
               sx={{ paddingX: 4, paddingY: 4, maxHeight: 400, overflow: 'auto' }}
             >
-              <Typography variant="bookingHeader">Current bookings:</Typography>
-              {renderOtherBookings()}
-              <Typography variant="bookingHeader" sx={{ marginTop: 3 }}>
-                Past bookings:
-              </Typography>
-              {renderPastBookings()}
+              <Stack>
+                <Typography variant="bookingHeader">Current bookings:</Typography>
+                {renderOtherBookings()}
+                <Typography variant="bookingHeader" sx={{ marginTop: 3 }}>
+                  Past bookings:
+                </Typography>
+                {renderPastBookings()}
+              </Stack>
             </Paper>
           </Grid>
         </Grid>
