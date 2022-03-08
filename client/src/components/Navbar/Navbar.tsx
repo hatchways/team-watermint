@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  Avatar,
 } from '@mui/material';
 import { AccountType } from '../../types/AccountType';
 import lovingSitterLogo from '../../images/logo.svg';
@@ -151,7 +152,7 @@ const Navbar: React.FC = () => {
                   onClick={handleMenuOpen}
                   color="inherit"
                 >
-                  <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                  <Avatar alt="Avatar photo" src={profile?.photo} sx={{ height: 40, width: 40 }} />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
