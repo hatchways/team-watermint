@@ -42,6 +42,7 @@ exports.loadProfile = asyncHandler(async (req, res, next) => {
 // @desc Get list of pet sitter profiles by location or get all
 // @access Public
 exports.searchProfiles = asyncHandler(async (req, res, next) => {
+
   if (req.query.location) {
     const profiles = await Profile.find({
       accountType: "pet_sitter",

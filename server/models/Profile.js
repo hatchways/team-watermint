@@ -39,6 +39,18 @@ const profileSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  headline: {
+    type: String,
+    default: "",
+  },
+  rating: {
+    type: Number,
+    default: null,
+  },
+  pay: {
+    type: Number,
+    default: null,
+  },
 });
 
 module.exports = Profile = mongoose.model("Profile", profileSchema);
