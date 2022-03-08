@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem as DropdownMenuItem,
   styled,
+  Avatar,
 } from '@mui/material';
 import { AccountType } from '../../types/AccountType';
 import lovingSitterLogo from '../../images/logo.svg';
@@ -112,10 +113,13 @@ const Navbar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    // TODO: conditionally render based on profile type
     return menuItems.map((menu) => {
       if (menu.authenticated) {
-        return loggedInUser && <MenuItem key={menu.resource} {...menu} />;
+        if (profile) {
+          return (
+            loggedInUser && menu.canView?.includes(profile.accountType) && <MenuItem key={menu.resource} {...menu} />
+          );
+        }
       } else {
         return !loggedInUser && <MenuItem key={menu.resource} {...menu} />;
       }
@@ -126,7 +130,7 @@ const Navbar: React.FC = () => {
     <Grid
       className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
       justifyContent="space-between"
-      alignItems="top"
+      alignItems="center"
       container
     >
       <Grid xs={4} md={6} item>
@@ -151,7 +155,7 @@ const Navbar: React.FC = () => {
                   onClick={handleMenuOpen}
                   color="inherit"
                 >
-                  <img style={{ width: 50 }} src={`https://robohash.org/${loggedInUser.email}`} />
+                  <Avatar alt="Avatar photo" src={profile?.photo} sx={{ height: 40, width: 40 }} />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
