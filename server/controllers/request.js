@@ -31,6 +31,12 @@ exports.loadRequests = asyncHandler(async (req, res, next) => {
 exports.createRequest = asyncHandler(async (req, res, next) => {
   const { sitterId, start, end } = req.body;
   const userId = req.user.id;
+  const profile = await Profile.findOne({ userId: req.user.id });
+
+  if (!profile) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
 
   const sitter = await User.findById(sitterId);
   if (!sitter) {
@@ -50,13 +56,14 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
     end: new Date(end),
   });
 
-  if (request) {
-    res.status(201).json({
-      success: {
-        request,
-      },
-    });
-  }
+  req.body.userId = sitterId;
+  req.body.title = `You have a new booking request from ${profile.name}`;
+  req.body.description = "Dog Sitting";
+  req.body.type = "booking";
+  req.body.link = "/my-jobs";
+  req.body.photo = profile.photo;
+
+  next();
 });
 
 // @route PUT /requests/:requestid
