@@ -130,7 +130,7 @@ const Navbar: React.FC = () => {
     <Grid
       className={clsx(classes.navbar, location.pathname === '/' && classes.transparentNavbar)}
       justifyContent="space-between"
-      alignItems="top"
+      alignItems="center"
       container
     >
       <Grid xs={4} md={6} item>
