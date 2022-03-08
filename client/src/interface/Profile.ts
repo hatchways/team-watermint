@@ -8,7 +8,7 @@ export interface Profile {
   description?: string;
   photo?: string;
   pay?: string;
-  headline?: string;
+  caption?: string;
   rating?: number;
   name: string;
   _id: string;

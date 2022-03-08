@@ -49,7 +49,7 @@ export default function ProfileDetails(): JSX.Element {
               photo={profile.photo}
               address={profile.address}
               description={profile.description}
-              headline={profile.headline}
+              headline={profile.caption}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
