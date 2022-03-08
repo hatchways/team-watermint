@@ -1,6 +1,7 @@
 import { Card, CardActionArea, CardContent, Typography, Rating, Box, Avatar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles({
 });
 
 interface ProfileCardProps {
+  id: string;
   photo: string;
   name: string;
   caption?: string;
@@ -38,11 +40,11 @@ interface ProfileCardProps {
   pay: number;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ photo, name, caption, rating, description, location, pay }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ id, photo, name, caption, rating, description, location, pay }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea component={Link} to={`/profile/${id}`}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyItems: 'center' }}>
           <Avatar alt="Profile Photo" src={photo} className={classes.avatar} />
           <Typography variant="h5" component="h2" fontWeight="500" textAlign="center">
